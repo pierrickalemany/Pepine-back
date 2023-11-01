@@ -1,0 +1,146 @@
+@apiEndpoint = http://localhost:{{$dotenv PORT}}
+
+### Products
+GET {{apiEndpoint}}/products
+
+### One products
+GET {{apiEndpoint}}/products/1
+
+### Modify User 1
+PATCH  {{apiEndpoint}}/users/1
+Content-Type: application/json
+
+{  
+   "first_name": "Serge",
+   "last_name": "Serge",
+   "email": "test@test.com",
+   "password": "test"
+ }
+
+### Modify Product 1
+PATCH  {{apiEndpoint}}/products/1
+Content-Type: application/json
+
+{  
+   "name" : "test 1", 
+   "scientific_name" : "test 2", 
+   "maturity_height" : "test",
+   "maturity_width": "test",
+   "family": "test", 
+   "origin": "test",
+   "flower_color": "test",  
+   "leaf_color": "test",
+   "description1": "test",
+   "description2": "test",
+   "stock" : 6,
+	"price" : 25,
+	"vat" : 20.00,
+	"statut": false,  
+	"yield_id": 1,
+	"hardiness_zone_id": 1,
+	"water_requirement_id": 1,
+	"exposure_id": 1, 
+   "ground_cover_power_id": 1, 
+	"strate_id" : 1,
+	"foliage_id": 1 
+ }
+
+### Product creation
+POST {{apiEndpoint}}/products/
+Content-Type: application/json
+
+{
+   "name": "Ciboulette",
+   "scientific_name": "ALLIUM schoenoprasum",
+   "maturity_height": "200 cm",
+   "maturity_width": "160 cm",
+   "family": "boum",
+   "origin": "tutu",
+   "flower_color": "rouge",
+   "leaf_color": "orenge",
+   "description1": "En été, les tiges creuses, dressées et odorantes de la ciboulette portent jusqu'à 20 fleurs violet clair ou roses disposées en ombelle dense et pouvant atteindre jusqu'à 5 cm d'envergure. Allium schoenoprasum est une plante vivace bulbeuse, comestible (tiges et fleurs), facile à vivre, utilisée comme condiment. Il est toutefois préférable de couper les fleurs avant qu'elles ne montent en graines.Plantation Exposition soleil, mi-ombre, rusticité rustique (t° mini : -15°), type de sol normal, richesse du sol pauvre, humidité du sol frais, ph du sol tous\n\nTous nos conseils de plantation\nCaractéristiques\nPlante, hauteur à maturité 25 cm, largeur à maturité 10 cm, couleur du feuillage vert tendre, type de feuillage semi-persistant, port hérissée\n\nCaractéristiques complètes",
+   "description2": "il n'y en a pas",
+   "stock": 15,
+   "price": 2.6,
+   "vat": 10,
+   "statut": "false",
+   "yield_id": 1,
+   "hardiness_zone_id": 1,
+   "water_requirement_id": 1,
+   "exposure_id": 1,
+   "ground_cover_power_id": 1,
+   "strate_id": 1,
+   "foliage_id": 1
+ }
+
+### User creation
+ POST {{apiEndpoint}}/users/
+Content-Type: application/json
+
+{
+   "first_name": "test",
+   "last_name": "essai",
+   "email": "test@test.com",
+   "password": "adzedhafhgfdsddsfdththdcdfvfvfzefdaheriufrt5t19619819rt" 
+}
+
+### Media creation
+ POST {{apiEndpoint}}/products/media
+Content-Type: application/json
+
+{
+   "url": "https://www.naturephotographie.com/wp-content/uploads/2019/02/Rays-of-Light-on-the-Summit-1461x975.jpg",
+   "name": "test"
+}
+
+### Product_has_media creation
+ POST {{apiEndpoint}}/products/media/order
+Content-Type: application/json
+
+{
+   "product_id": 1,
+   "media_id": 1,
+   "order": 1
+}
+
+### order creation
+ POST {{apiEndpoint}}/orders/
+Content-Type: application/json
+
+{
+   "first_name_order": "blublu",
+   "last_name_order": "bloblo",
+   "total_price": 150.12,
+   "statut": "validé",
+   "user_id": 1
+}
+
+### order_has_product creation
+ POST {{apiEndpoint}}/orders/details
+Content-Type: application/json
+
+{
+   "product_id": 1,
+   "order_id": 1,
+   "quantity": 12,
+   "price_time_order": 12.52,
+   "subtotal_price": 152.12
+}
+
+### Product_has_category creation
+ POST {{apiEndpoint}}/products/category
+Content-Type: application/json
+
+{
+   "product_id": 1,
+   "category_id": 1
+}
+
+### user_has_product creation
+ POST {{apiEndpoint}}/users/product
+Content-Type: application/json
+
+{
+   "product_id": 1,
+   "user_id": 1
+}
