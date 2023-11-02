@@ -15,6 +15,8 @@ SELECT
     p.leaf_color,
     p.description1,
     p.description2,
+    P.size,
+    P.pot,
     p.stock,
     p.price,
     p.vat,
