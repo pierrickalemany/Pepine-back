@@ -8,6 +8,7 @@ const debug = Debug('pepine:controllers:media');
 class MediaController extends CoreController {
   static dataMapper = mediaDataMapper;
 
+  // table name in postgresql
   static dataNames = 'media';
 
   /**

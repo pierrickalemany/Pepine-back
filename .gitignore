@@ -1,2 +1,4 @@
 #config
+.env
+sqitch.conf
 node_modules/

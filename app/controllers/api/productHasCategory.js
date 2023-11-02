@@ -8,6 +8,7 @@ const debug = Debug('pepine:controllers:product_has_category');
 class ProductHasCategoryController extends CoreController {
   static dataMapper = productHasCategoryDataMapper;
 
+  // table name in postgresql
   static dataNames = 'product_has_category';
 
   /**

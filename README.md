@@ -15,7 +15,6 @@ API backend pour la gestion des produits, utilisateurs et catégories.
 - Node.js
 - Express
 - PostgreSQL
-- Sequelize
 - Dotenv
 - Nodemon
 - bcrypt

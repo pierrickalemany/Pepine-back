@@ -53,7 +53,7 @@ class CoreDataMapper {
     // is executed
     const query = `SELECT * FROM ${this.constructor.insertFunc}($1)`;
     const results = await client.query(query, [JSON.stringify(createObj)]);
-    return results.rows[0];
+    return results.rows;
   }
 
   /**

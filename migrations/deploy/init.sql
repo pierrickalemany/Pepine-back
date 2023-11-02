@@ -119,6 +119,8 @@ CREATE TABLE
         "leaf_color" TEXT,
         "description1" TEXT,
         "description2" TEXT,
+        "size" TEXT,
+        "pot" TEXT,
         "stock" INT NOT NULL DEFAULT 0,
         "price" NUMERIC(5, 2) CHECK (price >= 0.0),
         "vat" NUMERIC,
@@ -153,7 +155,7 @@ CREATE TABLE
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         "product_id" INT REFERENCES "product"(id),
         "media_id" INT REFERENCES "media"(id),
-        "order" INT NOT NULL,
+        "order" INT NOT NULL CHECK ("order" >= 0),
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );
@@ -163,7 +165,7 @@ CREATE TABLE
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         "product_id" INT REFERENCES "product"(id),
         "order_id" INT REFERENCES "order"(id),
-        "quantity" INT NOT NULL CHECK (quantity >= 0) ,
+        "quantity" INT NOT NULL CHECK (quantity >= 0),
         "price_time_order" NUMERIC(5, 2) NOT NULL,
         "subtotal_price" NUMERIC(5, 2) NOT NULL,
         "created_at" timestamptz NOT NULL DEFAULT now(),

@@ -7,8 +7,10 @@ const debug = Debug('pepine:DataMapper:media');
 class MediaDataMapper extends CoreDataMapper {
   static tableName = 'media';
 
+  // insertfunction created in postgresql
   static insertFunc = 'create_media';
 
+  // updatefunction created in postgresql
   static updateFunc = 'update_media';
 
   /**

@@ -8,6 +8,7 @@ const debug = Debug('pepine:controllers:order');
 class OrderController extends CoreController {
   static dataMapper = orderDataMapper;
 
+  // table name in postgresql
   static dataNames = 'order';
 
   /**

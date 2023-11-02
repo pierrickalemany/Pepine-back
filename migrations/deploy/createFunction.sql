@@ -1,3 +1,4 @@
+-- SQLBook: Code
 -- Deploy pepine:createFunction to pg
 
 BEGIN;
@@ -45,24 +46,61 @@ CREATE FUNCTION create_user(json) RETURNS "user" AS $$
 	RETURNING *;
 $$ LANGUAGE sql STRICT VOLATILE;
 
-CREATE FUNCTION create_media(json) RETURNS "media" AS $$
-	INSERT INTO "media" ("url", "name")
-	VALUES (
-	   $1->>'url',
-	   $1->>'name'  
-	)
-	RETURNING *;
-$$ LANGUAGE sql STRICT VOLATILE;
+/*creating a loop to insert multiple values into the same query for media*/
+CREATE FUNCTION create_media(input_json jsonb) RETURNS SETOF "media" AS $$
+DECLARE
+    media_object JSONB;
+	url_value TEXT;
+	name_value TEXT;
+    inserted_row media%ROWTYPE;
+BEGIN
+    -- Loop through JSON array for each element
+    FOR media_object IN SELECT * FROM jsonb_array_elements(input_json) LOOP
+        -- Extract values from JSON object
+        url_value := media_object->>'url';
+        name_value := media_object->>'name';
+        
 
-CREATE FUNCTION create_product_has_media(json) RETURNS "product_has_media" AS $$
-	INSERT INTO "product_has_media" ("product_id", "media_id", "order")
-	VALUES (
-		($1->>'product_id')::int,
-	    ($1->>'media_id')::int,
-	    ($1->>'order')::int 
-	)
-	RETURNING *;
-$$ LANGUAGE sql STRICT VOLATILE;
+        -- Insert values into product_has_media table
+        INSERT INTO "media" ("url", "name")
+        VALUES (url_value, name_value)
+        RETURNING * INTO inserted_row; -- Return inserted row
+
+    -- End of loop, no value returned here because we already used RETURNING in INSERT statement
+    RETURN NEXT inserted_row;
+    END LOOP;
+	RETURN;
+END;
+$$ LANGUAGE plpgsql VOLATILE STRICT;
+
+/*creating a loop to insert multiple values into the same query for product_has_media*/
+CREATE FUNCTION create_product_has_media(input_json jsonb)
+RETURNS SETOF product_has_media AS $$
+DECLARE
+    media_object JSONB;
+    product_id INT;
+    media_id INT;
+    order_value INT;
+	inserted_row product_has_media%ROWTYPE;
+BEGIN
+    -- Loop through JSON array for each element
+    FOR media_object IN SELECT * FROM jsonb_array_elements(input_json) LOOP
+        -- Extract values from JSON object
+        product_id := (media_object->>'product_id')::INT;
+        media_id := (media_object->>'media_id')::INT;
+        order_value := (media_object->>'order')::INT;
+
+        -- Insert values into product_has_media table
+        INSERT INTO "product_has_media" ("product_id", "media_id", "order")
+        VALUES (product_id, media_id, order_value)
+        RETURNING * INTO inserted_row; -- Return inserted row
+
+    -- End of loop, no value returned here because we already used RETURNING in INSERT statement
+    RETURN NEXT inserted_row;
+    END LOOP;
+	RETURN;
+END;
+$$ LANGUAGE plpgsql STRICT VOLATILE;
 
 CREATE FUNCTION create_order(json) RETURNS "order" AS $$
 	INSERT INTO "order" ("first_name_order", "last_name_order", "total_price", "statut", "user_id")

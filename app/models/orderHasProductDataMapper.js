@@ -7,6 +7,7 @@ const debug = Debug('pepine:DataMapper:order_has_product');
 class OrderHasProductrDataMapper extends CoreDataMapper {
   static tableName = 'order_has_product';
 
+  // insertfunction created in postgresql
   static insertFunc = 'create_order_has_product';
 
   /**

@@ -7,8 +7,10 @@ const debug = Debug('pepine:DataMapper:user');
 class UserDataMapper extends CoreDataMapper {
   static tableName = 'user';
 
+  // insertfunction created in postgresql
   static insertFunc = 'create_user';
 
+  // update function created in postgresql
   static updateFunc = 'update_user';
 
   /**

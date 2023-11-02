@@ -7,10 +7,13 @@ const debug = Debug('pepine:DataMapper:product');
 class ProductDataMapper extends CoreDataMapper {
   static tableName = 'product';
 
+  // insertfunction created in postgresql
   static insertFunc = 'create_product';
 
+  // view created in postgresql
   static viewname = 'getAllProducts';
 
+  // update function created in postgresql
   static updateFunc = 'update_product';
 
   /**

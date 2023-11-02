@@ -7,6 +7,8 @@ SELECT * FROM "user" WHERE false;
 
 SELECT * FROM "strate" WHERE false;
 
+SELECT * FROM "media" WHERE false;
+
 SELECT * FROM "foliage" WHERE false;
 
 SELECT * FROM "ground_cover_power" WHERE false;

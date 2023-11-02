@@ -7,6 +7,7 @@ const debug = Debug('pepine:DataMapper:product_has_media');
 class ProductHasMediaDataMapper extends CoreDataMapper {
   static tableName = 'product_has_media';
 
+  // insertfunction created in postgresql
   static insertFunc = 'create_product_has_media';
 
   /**

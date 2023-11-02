@@ -88,20 +88,33 @@ Content-Type: application/json
  POST {{apiEndpoint}}/products/media
 Content-Type: application/json
 
-{
-   "url": "https://www.naturephotographie.com/wp-content/uploads/2019/02/Rays-of-Light-on-the-Summit-1461x975.jpg",
-   "name": "test"
-}
+[
+ {
+    "url": "https://www.naturephotographie.com/wp-content/uploads/2019/02/Rays-of-Light-on-the-Summit-1461x975.jpg",
+    "name": "test"
+ },
+ {
+    "url": "https://www.mangiarebuono.it/wp-content/uploads/2016/02/ananas3.jpg",
+    "name": "essai"
+ }
+]
 
 ### Product_has_media creation
  POST {{apiEndpoint}}/products/media/order
 Content-Type: application/json
 
-{
-   "product_id": 1,
-   "media_id": 1,
-   "order": 1
-}
+[
+ {
+    "product_id": 1,
+    "media_id": 1,
+    "order": 1
+ },
+ {
+    "product_id": 2,
+    "media_id": 2,
+    "order": 1
+ }
+]
 
 ### order creation
  POST {{apiEndpoint}}/orders/

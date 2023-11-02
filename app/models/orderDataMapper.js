@@ -7,6 +7,7 @@ const debug = Debug('pepine:DataMapper:order');
 class OrderDataMapper extends CoreDataMapper {
   static tableName = 'order';
 
+  // insertfunction created in postgresql
   static insertFunc = 'create_order';
 
   /**
