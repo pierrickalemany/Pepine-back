@@ -70,7 +70,7 @@ INSERT INTO "product" (
   "origin",
   "flower_color",
   "leaf_color",
-  "statut",
+  "status",
   "stock",
   "vat",
   "price"

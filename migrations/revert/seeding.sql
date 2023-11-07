@@ -2,7 +2,8 @@
 -- Revert pepine:seeding from pg
 
 BEGIN;
-DELETE FROM "user_has_product";
+
+
 DELETE FROM "product_has_category";
 DELETE FROM "order_has_product";
 DELETE FROM "product_has_media";

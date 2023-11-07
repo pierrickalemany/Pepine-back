@@ -2,11 +2,14 @@
 // Environment
 import 'dotenv/config.js';
 
+import Debug from 'debug';
 // Modules import
 import { createServer } from 'node:http';
 
-import Debug from 'debug';
+import userDocImplementation from './app/services/swagger.js';
 import app from './app/index.app.js';
+
+userDocImplementation(app);
 
 const debug = Debug('pepine:httpserver');
 

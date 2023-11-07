@@ -1,4 +1,3 @@
--- SQLBook: Code
 -- Deploy pepine:init to pg
 -- Start of transaction
 BEGIN;
@@ -12,9 +11,9 @@ CHECK(
 CREATE TABLE
     "user"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "first_name" TEXT NOT NULL,
-        "last_name" TEXT NOT NULL,
-        "email" email NOT NULL UNIQUE,
+        "first_name" TEXT NOT NULL CHECK (LENGTH("first_name") <= 20),
+        "last_name" TEXT NOT NULL CHECK (LENGTH("last_name") <= 20),
+        "email" email NOT NULL UNIQUE CHECK (LENGTH("email") <= 50),
         "password" TEXT NOT NULL UNIQUE,
         "role" TEXT NOT NULL DEFAULT 'user',
         "created_at" timestamptz NOT NULL DEFAULT now(),
@@ -82,8 +81,8 @@ CREATE TABLE
         "first_name_order" TEXT NOT NULL,
         "last_name_order" TEXT NOT NULL,
         "total_price" NUMERIC(5, 2) NOT NULL,
-        "statut" TEXT NOT NULL,
-        "user_id" INT NOT NULL REFERENCES "user"(id),
+        "status" TEXT NOT NULL,
+        "user_id" INT NULL REFERENCES "user"(id) ON DELETE SET NULL,
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );
@@ -101,7 +100,7 @@ CREATE TABLE
     "media"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         "url" TEXT NOT NULL UNIQUE,
-        "name" TEXT NOT NULL UNIQUE,
+        "name" TEXT NOT NULL UNIQUE CHECK (LENGTH("name") <= 50),
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );
@@ -109,22 +108,23 @@ CREATE TABLE
 CREATE TABLE
     "product"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "name" TEXT NOT NULL,
-        "scientific_name" TEXT NOT NULL,
-        "maturity_height" TEXT,
-        "maturity_width" TEXT,
-        "family" TEXT,
-        "origin" TEXT,
-        "flower_color" TEXT,
-        "leaf_color" TEXT,
+        "name" TEXT NOT NULL CHECK (LENGTH("name") <= 50),
+        "scientific_name" TEXT NOT NULL CHECK (LENGTH("scientific_name") <= 50),
+        "maturity_height" TEXT CHECK (LENGTH("maturity_height") <= 50),
+        "maturity_width" TEXT CHECK (LENGTH("maturity_width") <= 50),
+        "family" TEXT CHECK (LENGTH("family") <= 50),
+        "origin" TEXT CHECK (LENGTH("origin") <= 50),
+        "flower_color" TEXT CHECK (LENGTH("flower_color") <= 50),
+        "leaf_color" TEXT CHECK (LENGTH("leaf_color") <= 50),
         "description1" TEXT,
         "description2" TEXT,
-        "size" TEXT,
-        "pot" TEXT,
+        "size" TEXT CHECK (LENGTH("size") <= 50),
+        "pot" TEXT CHECK (LENGTH("pot") <= 50),
         "stock" INT NOT NULL DEFAULT 0,
         "price" NUMERIC(5, 2) CHECK (price >= 0.0),
         "vat" NUMERIC,
-        "statut" BOOLEAN NOT NULL,
+        "status" BOOLEAN NOT NULL,
+        "user_id" INT NOT NULL REFERENCES "user"(id),
         "yield_id" INT NOT NULL REFERENCES "yield"(id),
         "hardiness_zone_id" INT NOT NULL REFERENCES "hardiness_zone"(id),
         "water_requirement_id" INT NOT NULL REFERENCES "water_requirement"(id),
@@ -143,18 +143,12 @@ CREATE TABLE
         "category_id" INT REFERENCES "category"(id)
     );
 
-CREATE TABLE
-    "user_has_product"(
-        "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "product_id" INT REFERENCES "product"(id),
-        "user_id" INT REFERENCES "user"(id)
-    );
 
 CREATE TABLE
     "product_has_media"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         "product_id" INT REFERENCES "product"(id),
-        "media_id" INT REFERENCES "media"(id),
+        "media_id" INT REFERENCES "media"(id) ON DELETE CASCADE,
         "order" INT NOT NULL CHECK ("order" >= 0),
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz

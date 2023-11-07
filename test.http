@@ -3,8 +3,32 @@
 ### Products
 GET {{apiEndpoint}}/products
 
-### One products
+### One product
 GET {{apiEndpoint}}/products/1
+
+### Categories
+GET {{apiEndpoint}}/categories/
+
+### One category
+GET {{apiEndpoint}}/categories/3
+
+### Products of Category
+GET {{apiEndpoint}}/categories/3/products
+
+### Orders
+GET {{apiEndpoint}}/orders
+
+### One order
+GET {{apiEndpoint}}/orders/2
+
+### Users
+GET {{apiEndpoint}}/users
+
+### One user account
+GET {{apiEndpoint}}/users/5
+
+### Orders of user account
+GET {{apiEndpoint}}/users/3/orders
 
 ### Modify User 1
 PATCH  {{apiEndpoint}}/users/1
@@ -16,6 +40,33 @@ Content-Type: application/json
    "email": "test@test.com",
    "password": "test"
  }
+
+### Modify Status Order 1
+PATCH {{apiEndpoint}}/orders/1/update-status
+Content-Type: application/json
+
+{
+    "newStatus": "validé"
+}
+
+### Modify Categories of a product 1
+PATCH {{apiEndpoint}}/products/1/categories
+Content-Type: application/json
+
+{
+    "categoryIds": [1, 2, 3]
+}
+
+### Modify Url Medias for 1 product
+PATCH {{apiEndpoint}}/products/1/media
+Content-Type: application/json
+
+{
+    "newMediaUrls": [
+        {"url": "http://example.com/image1.jpg", "name": "Image 1"},
+        {"url": "http://example.com/image2.jpg", "name": "Image 2"}
+    ]
+}
 
 ### Modify Product 1
 PATCH  {{apiEndpoint}}/products/1
@@ -35,7 +86,7 @@ Content-Type: application/json
    "stock" : 6,
 	"price" : 25,
 	"vat" : 20.00,
-	"statut": false,  
+	"status": false,  
 	"yield_id": 1,
 	"hardiness_zone_id": 1,
 	"water_requirement_id": 1,
@@ -63,7 +114,8 @@ Content-Type: application/json
    "stock": 15,
    "price": 2.6,
    "vat": 10,
-   "statut": "false",
+   "status": "false",
+   "user_id": 1,
    "yield_id": 1,
    "hardiness_zone_id": 1,
    "water_requirement_id": 1,
@@ -74,7 +126,7 @@ Content-Type: application/json
  }
 
 ### User creation
- POST {{apiEndpoint}}/users/
+POST {{apiEndpoint}}/users/
 Content-Type: application/json
 
 {
@@ -85,7 +137,7 @@ Content-Type: application/json
 }
 
 ### Media creation
- POST {{apiEndpoint}}/products/media
+POST {{apiEndpoint}}/products/media
 Content-Type: application/json
 
 [
@@ -100,7 +152,7 @@ Content-Type: application/json
 ]
 
 ### Product_has_media creation
- POST {{apiEndpoint}}/products/media/order
+POST {{apiEndpoint}}/products/media/order
 Content-Type: application/json
 
 [
@@ -117,19 +169,19 @@ Content-Type: application/json
 ]
 
 ### order creation
- POST {{apiEndpoint}}/orders/
+POST {{apiEndpoint}}/orders/
 Content-Type: application/json
 
 {
    "first_name_order": "blublu",
    "last_name_order": "bloblo",
    "total_price": 150.12,
-   "statut": "validé",
+   "status": "validé",
    "user_id": 1
 }
 
 ### order_has_product creation
- POST {{apiEndpoint}}/orders/details
+POST {{apiEndpoint}}/orders/details
 Content-Type: application/json
 
 {
@@ -141,7 +193,7 @@ Content-Type: application/json
 }
 
 ### Product_has_category creation
- POST {{apiEndpoint}}/products/category
+POST {{apiEndpoint}}/products/category
 Content-Type: application/json
 
 {
@@ -149,11 +201,28 @@ Content-Type: application/json
    "category_id": 1
 }
 
-### user_has_product creation
- POST {{apiEndpoint}}/users/product
+### Register User
+POST {{apiEndpoint}}/users/register
 Content-Type: application/json
 
 {
-   "product_id": 1,
-   "user_id": 1
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "john.doe@example.com",
+  "password": "securepassword123"
 }
+
+
+### Login User
+POST {{apiEndpoint}}/users/login
+Content-Type: application/json
+
+{
+   "email": "john.doe@example.com",
+   "password": "securepassword123"
+}
+### media delete
+DELETE {{ apiEndpoint }}/products/media/3
+
+### media delete
+DELETE {{ apiEndpoint }}/products/media/3

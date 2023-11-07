@@ -5,7 +5,7 @@ BEGIN;
 
 CREATE FUNCTION create_product(json) RETURNS product AS $$
 	INSERT INTO "product" ("name", "scientific_name", "maturity_height", "maturity_width", "family", "origin",
-						   "flower_color", "leaf_color", "description1", "description2", "stock", "price", "vat", "statut",
+						   "flower_color", "leaf_color", "description1", "description2", "stock", "price", "vat", "status", "user_id",
 						  "yield_id", "hardiness_zone_id", "water_requirement_id", "exposure_id", "ground_cover_power_id", "strate_id", "foliage_id")
 	VALUES (
 	   $1->>'name',
@@ -21,7 +21,8 @@ CREATE FUNCTION create_product(json) RETURNS product AS $$
 	   ($1->>'stock')::int,
 	   ($1->>'price')::numeric,
 	   ($1->>'vat')::numeric,
-	   ($1->>'statut')::boolean,
+	   ($1->>'status')::boolean,
+	   ($1->>'user_id')::int,
 	   ($1->>'yield_id')::int,
 	   ($1->>'hardiness_zone_id')::int,
 	   ($1->>'water_requirement_id')::int,
@@ -103,12 +104,12 @@ END;
 $$ LANGUAGE plpgsql STRICT VOLATILE;
 
 CREATE FUNCTION create_order(json) RETURNS "order" AS $$
-	INSERT INTO "order" ("first_name_order", "last_name_order", "total_price", "statut", "user_id")
+	INSERT INTO "order" ("first_name_order", "last_name_order", "total_price", "status", "user_id")
 	VALUES (
 		$1->>'first_name_order',
 	    $1->>'last_name_order',
 	    ($1->>'total_price')::numeric, 
-		$1->>'statut', 
+		$1->>'status', 
 		($1->>'user_id')::int 
 	)
 	RETURNING *;
@@ -131,16 +132,6 @@ CREATE FUNCTION create_product_has_category(json) RETURNS "product_has_category"
 	VALUES (
 		($1->>'product_id')::int,
 	    ($1->>'category_id')::int    
-	)
-	RETURNING *;
-$$ LANGUAGE sql STRICT VOLATILE;
-
-
-CREATE FUNCTION create_user_has_product(json) RETURNS "user_has_product" AS $$
-	INSERT INTO "user_has_product" ("product_id", "user_id")
-	VALUES (
-		($1->>'product_id')::int,
-	    ($1->>'user_id')::int    
 	)
 	RETURNING *;
 $$ LANGUAGE sql STRICT VOLATILE;

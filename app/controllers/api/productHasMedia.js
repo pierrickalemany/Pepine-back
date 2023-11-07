@@ -20,6 +20,21 @@ class ProductHasMediaController extends CoreController {
 
     debug('productHasMedia controller created');
   }
+
+  /**
+   * Updates the media URLs of a product with the given ID.
+   * @async
+   * @function updateProductMedias
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Promise<void>} - A Promise that resolves with the updated product media URLs.
+   */
+  updateProductMedias = async (req, res) => {
+    const { id } = req.params;
+    const { newMediaUrls } = req.body;
+    const results = await this.constructor.dataMapper.updateProductMedias(id, newMediaUrls);
+    res.json(results);
+  };
 }
 
 export default new ProductHasMediaController();

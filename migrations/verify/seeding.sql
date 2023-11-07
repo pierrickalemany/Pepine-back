@@ -3,6 +3,8 @@
 
 BEGIN;
 
+SELECT * FROM "order" WHERE false;
+
 SELECT * FROM "user" WHERE false;
 
 SELECT * FROM "strate" WHERE false;

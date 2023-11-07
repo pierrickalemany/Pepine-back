@@ -1,4 +1,5 @@
 import Debug from 'debug';
+import UnprocessableEntityError from '../../errors/UnprocessableEntityError.js';
 
 const debug = Debug('pepine:CoreController');
 
@@ -12,7 +13,7 @@ class CoreController {
   getAll = async (_, response) => {
     debug(`${this.constructor.name} getAll`);
     const results = await this.constructor.dataMapper.findAll();
-    const responseObject = { status: 'success', data: { } };
+    const responseObject = { statut: 'success', data: { } };
     responseObject.data[this.constructor.dataNames] = results;
     response.json(responseObject);
   };
@@ -27,7 +28,7 @@ class CoreController {
     debug(`${this.constructor.name} getOne`);
     const { id } = request.params;
     const result = await this.constructor.dataMapper.findByPk(id);
-    const responseObject = { status: 'success', data: { } };
+    const responseObject = { statut: 'success', data: { } };
     responseObject.data[this.constructor.dataNames] = result;
     return response.json(responseObject);
   };
@@ -41,26 +42,41 @@ class CoreController {
   create = async (request, response) => {
     debug(`${this.constructor.name} create`);
     const result = await this.constructor.dataMapper.create(request.body);
-    const responseObject = { status: 'success', data: {} };
+    const responseObject = { statut: 'success', data: {} };
     responseObject.data[this.constructor.dataNames[0]] = result;
     response.json(responseObject);
   };
 
   /**
-   * Update a resource by ID.
-   * @async
-   * @function update
-   * @param {Object} request - The HTTP request object.
-   * @param {Object} response - The HTTP response object.
-   * @returns {Promise<void>} - A Promise that resolves when the response has been sent.
-   */
+   * update one entry in a table
+   * @param {Object} request
+   * @param {Object} response
+   * @returns {Object} response
+   * @memberof CoreController
+  */
   update = async (request, response) => {
     debug(`${this.constructor.name} update`);
     request.body.id = request.params.id;
     const result = await this.constructor.dataMapper.update(request.body);
-    const responseObject = { status: 'success', data: {} };
+    const responseObject = { statut: 'success', data: {} };
     responseObject.data[this.constructor.dataNames[0]] = result;
     response.json(responseObject);
+  };
+
+  /**
+   * remove one entry in a table
+   *
+   * @param {Object} request
+   * @param {Object} response
+   */
+  deleteOne = async (request, response) => {
+    debug(`${this.constructor.name} delete`);
+    const { id } = request.params;
+    const deleteCount = await this.constructor.dataMapper.delete(id);
+    if (!deleteCount) {
+      throw new UnprocessableEntityError();
+    }
+    response.json({ status: 'success', data: null });
   };
 }
 

@@ -7,7 +7,6 @@ BEGIN;
 DROP TABLE IF EXISTS 
     "order_has_product",
     "product_has_media",
-    "user_has_product",
     "product_has_category",
     "product",
     "media",
@@ -20,7 +19,7 @@ DROP TABLE IF EXISTS
     "ground_cover_power",
     "foliage",
     "strate",
-    "user" CASCADE;
+    "user" CASCADE ;
 
 -- Deleting the sequence
 DROP SEQUENCE IF EXISTS order_id_seq;

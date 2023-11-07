@@ -11,7 +11,7 @@ class CoreDataMapper {
    */
   async findAll() {
     debug(`${this.constructor.name} findAll`);
-    const dataSource = this.constructor.viewname || this.constructor.tableName;
+    const dataSource = this.constructor.viewname || `"${this.constructor.tableName}"`;
     const preparedQuery = {
       text:
       `SELECT * FROM ${dataSource} ORDER BY "id"`,
@@ -28,7 +28,7 @@ class CoreDataMapper {
    */
   async findByPk(id) {
     debug(`${this.constructor.name} findByPk(${id})`);
-    const dataSource = this.constructor.viewname || this.constructor.tableName;
+    const dataSource = this.constructor.viewname || `"${this.constructor.tableName}"`;
     const preparedQuery = {
       text: `SELECT * FROM ${dataSource} WHERE id=$1`,
       values: [id],
@@ -70,6 +70,21 @@ class CoreDataMapper {
       )}')`,
     );
     return results.rows[0];
+  }
+
+  /**
+   * remove an entry
+   *
+   * @param {number} id - the entry id
+   */
+  async delete(id) {
+    debug(`${this.constructor.name} delete(${id})`);
+    const preparedQuery = {
+      text: `DELETE FROM "${this.constructor.tableName}" WHERE id=$1`,
+      values: [id],
+    };
+    const results = await client.query(preparedQuery);
+    return results.rowCount;
   }
 }
 
