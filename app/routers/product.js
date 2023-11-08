@@ -3,7 +3,9 @@ import productController from '../controllers/api/product.js';
 import mediaController from '../controllers/api/media.js';
 import productHasMediaController from '../controllers/api/productHasMedia.js';
 import productHasCategoryController from '../controllers/api/productHasCategory.js';
+import controllerHandler from '../controllers/helpers/controllerHandler.js';
 import authenticateToken from '../middleware/authenticateToken.js';
+
 
 const router = Router();
 /**
@@ -73,7 +75,7 @@ const router = Router();
  * @return {object} 500 - *Internal server error*
  */
 
-router.get('/', productController.getAll);
+router.get('/', controllerHandler(productController.getAll.bind(productController)));
 
 /**
  * GET /products/{id}
@@ -86,65 +88,73 @@ router.get('/', productController.getAll);
  * @return {[object]}  404 -            [not found]
  * @return {[object]}  500 - [internal server error]
  */
-router.get('/:id([0-9]+)', productController.getOne);
+router.get('/:id([0-9]+)', controllerHandler(productController.getOne.bind(productController)));
 
 /**
  * POST /products/
  * @summary Create a new product
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[Product]}  request.body [product description]
  *
  * @return  {[Product]} 200 - [success response]
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 - [internal server error]
  */
-router.post('/', authenticateToken, productController.create);
+
+router.post('/', authenticateToken, controllerHandler(productController.create.bind(productController)));
+
 
 /**
  * POST /products/media
  * @summary Create a new media for a product
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[MediaUrl]}  request.body [media description]
  *
  * @return  {[MediaUrl]} 200 - [success response]
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 - [internal server error]
  */
-router.post('/media', authenticateToken, mediaController.create);
+
+router.post('/media', authenticateToken, controllerHandler(mediaController.create.bind(mediaController)));
+
 
 /**
  * POST /products/media/order
  * @summary Create a new order for product media
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[ProductHasMedia]}  request.body [product media description]
  *
  * @return  {[ProductHasMedia]} 200 - [success response]
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 - [internal server error]
  */
-router.post('/media/order', authenticateToken, productHasMediaController.create);
+
+router.post('/media/order', authenticateToken, controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
+
 
 /**
  * POST /products/category
  * @summary Create a new category for a product
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[ProductHasCategory]}  request.body [product category description]
  *
  * @return  {[ProductHasCategory]} 200 - [success response]
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 - [internal server error]
  */
-router.post('/category', authenticateToken, productHasCategoryController.create);
+
+router.post('/category', authenticateToken, controllerHandler(productHasCategoryController.create.bind(productHasCategoryController)));
+
 
 /**
  * PATCH /products/{id}
  * @summary Update a product by ID
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[number]} id.path          [id description]
  * @param   {[Product]}  request.body      [product description]
  *
@@ -152,13 +162,15 @@ router.post('/category', authenticateToken, productHasCategoryController.create)
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 -            [internal server error]
  */
-router.patch('/:id', authenticateToken, productController.update);
+
+router.patch('/:id', authenticateToken, controllerHandler(productController.update.bind(productController)));
+
 
 /**
  * PATCH /products/{id}/categories
  * @summary Update product categories by ID
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[number]} id.path          [id description]
  * @param   {[ProductHasCategory]}  request.body      [product category description]
  *
@@ -166,13 +178,15 @@ router.patch('/:id', authenticateToken, productController.update);
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 -            [internal server error]
  */
-router.patch('/:id/categories', authenticateToken, productHasCategoryController.updateProductCategories);
+
+router.patch('/:id/categories', authenticateToken, controllerHandler(productHasCategoryController.updateProductCategories.bind(productHasCategoryController)));
+
 
 /**
  * PATCH /products/{id}/media
  * @summary Update product medias by ID
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[number]} id.path          [id description]
  * @param   {[Media]}  request.body      [product media description]
  *
@@ -180,18 +194,22 @@ router.patch('/:id/categories', authenticateToken, productHasCategoryController.
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  500 -            [internal server error]
  */
-router.patch('/:id/media', authenticateToken, productHasMediaController.updateProductMedias);
+
+router.patch('/:id/media', authenticateToken, controllerHandler(productHasMediaController.updateProductMedias.bind(productHasMediaController)));
+
 
 /**
  * DELETE producte/media/{id}
  * @summary Delete a media by ID
  * @tags Product
- *
+ * @security bearerAuth
  * @param   {[number]} id.path          [id description]
  * @return  {[]} 200 -              [success response]
  * @return {[object]}  400 -            [bad request]
  * @return {[object]}  422 -            [unprocessable entity error]
  */
-router.delete('/media/:id', authenticateToken, mediaController.deleteOne);
+
+router.delete('/media/:id', authenticateToken, controllerHandler(mediaController.deleteOne.bind(mediaController)));
+
 
 export default router;

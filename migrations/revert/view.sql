@@ -2,7 +2,7 @@
 
 BEGIN;
 
-    /*DROP VIEW getAllOrders;*/
+    DROP VIEW getAllOrders;
     DROP VIEW getAllProducts;
 
 COMMIT;

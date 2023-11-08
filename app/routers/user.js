@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import userController from '../controllers/api/user.js';
+import controllerHandler from '../controllers/helpers/controllerHandler.js';
 import authenticateToken from '../middleware/authenticateToken.js';
+
 
 const router = Router();
 /**
@@ -87,13 +89,16 @@ router.post('/login', userController.login);
  * @return {object} 500 - Internal server error - application/json
  */
 
+router.post('/', controllerHandler(userController.create.bind(userController)));
+
+
 router.get('/', userController.getAll);
 
 /**
  * GET /users/{id}
  * @summary Get one user
  * @tags User
- * @security BearerAuth
+ * @security bearerAuth
  * @param {number} id.path.required - id of the user to get
  * @return {User} 200 - User created - application/json
  * @return {object} 400 - Bad request - application/json
@@ -104,7 +109,8 @@ router.get('/:id([0-9]+)', authenticateToken, userController.getOne);
 
 /**
  * GET /users/{id}/orders
- *@summary Get all orders of one user
+ * @summary Get all orders of one user
+ * @security bearerAuth
  * @tags User
  * @return {[UserOrder]} 200 - User created - application/json
  * @return {object} 400 - Bad request - application/json
@@ -112,12 +118,12 @@ router.get('/:id([0-9]+)', authenticateToken, userController.getOne);
  */
 router.get('/:id([0-9]+)/orders', authenticateToken, userController.getAllOrdersOfUser);
 
-router.post('/', userController.create);
 
 /**
  * PATCH /users/{id}
  * @summary Update user
  * @tags User
+ * @security bearerAuth
  * @param {number} id.path.required - id of the user to update
  * @param {User} request.body.required - User info
  * @return {User} 200 - User updated - application/json
@@ -125,18 +131,22 @@ router.post('/', userController.create);
  * @return {object} 404 - User not found - application/json
  * @return {object} 500 - Internal server error - application/json
  */
-router.patch('/:id', authenticateToken, userController.update);
+
+router.patch('/:id', authenticateToken, controllerHandler(userController.update.bind(userController)));
+
 
 /**
  * DELETE /users/{id}
  * @summary Delete user
  * @tags User
- *
+ * @security bearerAuth
  * @param   {[number]} id.path          [id description]
  * @return  {[]} 200 -              [success response]
  * @return {[object]}  422 -            [unprocessable entity error]
  */
 
-router.delete('/:id', authenticateToken, userController.deleteOne);
+
+router.delete('/:id',authenticateToken, controllerHandler(userController.deleteOne.bind(userController)));
+
 
 export default router;

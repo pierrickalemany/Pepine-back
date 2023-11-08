@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import userDocImplementation from './services/swagger.js';
 
 import router from './routers/index.router.js';
 
@@ -9,8 +10,12 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
+userDocImplementation(app);
 app.use(router);
 
 export default app;

@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 export default function authenticateToken(req, res, next) {
   // Gather the jwt access token from the request header
   const authHeader = req.headers.authorization;
+
   const token = authHeader && authHeader.split(' ')[1];
 
   if (req.path.startsWith('/api-docs')) {

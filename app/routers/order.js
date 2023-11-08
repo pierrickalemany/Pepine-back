@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import orderHasProductController from '../controllers/api/orderHasProduct.js';
 import orderController from '../controllers/api/order.js';
+import controllerHandler from '../controllers/helpers/controllerHandler.js';
 import authenticateToken from '../middleware/authenticateToken.js';
+
 
 const router = Router();
 /**
@@ -50,6 +52,7 @@ const router = Router();
  * GET /orders/
  * @summary Get all orders
  * @tags Order
+ * @security bearerAuth
  * @return {[OrderComplete]} 200 - *Success response*
  * @return {object} 500 - *Internal server error*
  * @return {object} 400 - *Bad request*
@@ -61,6 +64,7 @@ router.get('/', authenticateToken, orderController.getAllOrders);
  * GET /orders/{id}
  * @summary Get a order by ID
  * @tags Order
+ * @security bearerAuth
  * @param   {[number]} id.path [id description]
  * @return  {[OrderComplete]} 200 - [success response]
  * @return {[object]}  404 -            [not found]
@@ -73,37 +77,41 @@ router.get('/:id([0-9]+)', authenticateToken, orderController.getOneOrder);
  * POST /orders/
  * @summary Create order
  * @tags Order
+ * @security bearerAuth
  * @param   {[Order]}  request.body      [order description]
  * @return  {[Order]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
+ * @return {[object]}  422 -            [Unprocessable Entity]
  * @return {[object]}  500 -            [internal server error]
  */
-router.post('/', authenticateToken, orderController.create);
+
+router.post('/', authenticateToken, controllerHandler(orderController.create.bind(orderController)));
 
 /**
  * POST /orders/details
  * @summary Create order_has_product
  * @tags OrderHasProduct
+ * @security bearerAuth
  * @param   {[OrderHasProduct]}  request.body      [order description]
  * @return  {[OrderHasProduct]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
+ * @return {[object]}  422 -            [Unprocessable Entity]
  * @return {[object]}  500 -            [internal server error]
  */
-router.post('/details', authenticateToken, orderHasProductController.create);
+
+router.post('/details', authenticateToken, controllerHandler(orderHasProductController.create.bind(orderHasProductController)));
 
 /**
  * PATCH /orders/{id}/update-status
  * @summary Update order status
  * @tags Order
- *
+ * @security bearerAuth
  * @param   {[number]} id.path          [id description]
  * @param   {[PatchOrder]}  request.body      [order description]
- *
- * @return  {[]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
+ * @return  {[PatchOrder]} 200 -              [success response]
+ * @return {[object]}  422 -            [Unprocessable Entity]
  * @return {[object]}  500 -            [internal server error]
  */
 
-router.patch('/:id/update-status', authenticateToken, orderController.updateOrderStatus);
+router.patch('/:id/update-status', authenticateToken, controllerHandler(orderController.updateOrderStatus.bind(orderController)));
+
 
 export default router;

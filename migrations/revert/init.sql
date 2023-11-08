@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS
     "ground_cover_power",
     "foliage",
     "strate",
-    "user" CASCADE ;
+    "user" CASCADE;
 
 -- Deleting the sequence
 DROP SEQUENCE IF EXISTS order_id_seq;

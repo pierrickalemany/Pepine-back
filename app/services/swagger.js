@@ -11,18 +11,14 @@ export default (app) => {
       description: 'The better API for a nurseryman',
 
     },
-    components: {
-      securitySchemes: {
-        bearerAuth: { // Nom de la référence que vous utiliserez dans vos annotations JSDoc
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
+    security: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        description: 'For authenticating API requests via Swagger UI, provide your JWT token when prompted. Do not add the "Bearer" prefix; it will be automatically applied. Enter your JWT token as is, like this: YOUR_JWT_TOKEN_HERE.',
       },
     },
-    security: [{
-      bearerAuth: [],
-    }],
     // Base directory which we use to locate your JSDOC files
     baseDir: dirname,
     // Glob pattern to find your jsdoc files (multiple patterns can be added in an array)
