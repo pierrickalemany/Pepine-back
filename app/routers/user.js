@@ -1,8 +1,11 @@
+/* eslint-disable max-len */
 import { Router } from 'express';
 import userController from '../controllers/api/user.js';
 import controllerHandler from '../controllers/helpers/controllerHandler.js';
 import authenticateToken from '../middleware/authenticateToken.js';
-
+import validate from '../validations/validate.js';
+import * as userSchemas from '../validations/schemas/userSchemas.js';
+import * as idSchemas from '../validations/schemas/idSchemas.js';
 
 const router = Router();
 /**
@@ -41,7 +44,7 @@ const router = Router();
  * @property {number} product_id.required - Product ID - ex: 1
  * @property {number} quantity.required - Quantity of the product - ex: 1
  * @property {number} price_time_order.required - Price of the product - ex: 100
- * @property {number} subtotal_price.required - Total price of the products - ex: 10
+ * @property {number} vat.required - Total price of the products - ex: 10
  */
 
 /**
@@ -55,7 +58,7 @@ const router = Router();
  * @property {number} product_id.required - Product ID - ex: 1
  * @property {number} quantity.required - Quantity of the product - ex: 1
  * @property {number} price_time_order.required - Price of the product - ex: 100
- * @property {number} subtotal_price.required - Total price of the products - ex: 10
+ * @property {number} vat.required - Total price of the products - ex: 10
  */
 
 /**
@@ -64,10 +67,29 @@ const router = Router();
  * @tags User
  * @param   {[RegisterUser]}  request.body      [user registration details]
  *
- * @return  {[object]}  200 -              [success response]
- * @return {[object]}   500 -              [internal server error]
+ * @return  {[object]}  200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-router.post('/register', userController.register);
+router.post('/register', validate(userSchemas.registerSchema.post, 'body'), controllerHandler(userController.register.bind(userController)));
 
 /**
  * POST /users/login
@@ -75,24 +97,66 @@ router.post('/register', userController.register);
  * @tags User
  * @param   {[LoginUser]}  request.body      [user login details]
  *
- * @return  {[object]}  200 -              [success response]
- * @return {[object]}   500 -              [internal server error]
+ * @return  {[object]}  200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 401 - Unauthorized - application/json
+ * @example response - 401 - Example of unauthorized response
+ * {
+ * "message": "Invalid password"
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-router.post('/login', userController.login);
+router.post('/login', validate(userSchemas.loginSchema.post, 'body'), controllerHandler(userController.login.bind(userController)));
+
+router.post('/', validate(userSchemas.userSchema.post, 'body'), controllerHandler(userController.create.bind(userController)));
 
 /**
  * GET /users/
  * @summary Get all user
  * @tags User
  * @return {User} 200 - User created - application/json
- * @return {object} 400 - Bad request - application/json
  * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
 router.post('/', controllerHandler(userController.create.bind(userController)));
 
-
-router.get('/', userController.getAll);
+router.get('/', authenticateToken, controllerHandler(userController.getAll.bind(userController)));
 
 /**
  * GET /users/{id}
@@ -101,11 +165,30 @@ router.get('/', userController.getAll);
  * @security bearerAuth
  * @param {number} id.path.required - id of the user to get
  * @return {User} 200 - User created - application/json
- * @return {object} 400 - Bad request - application/json
  * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  *
  */
-router.get('/:id([0-9]+)', authenticateToken, userController.getOne);
+
+router.get('/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(userController.getOne.bind(userController)));
 
 /**
  * GET /users/{id}/orders
@@ -113,11 +196,29 @@ router.get('/:id([0-9]+)', authenticateToken, userController.getOne);
  * @security bearerAuth
  * @tags User
  * @return {[UserOrder]} 200 - User created - application/json
- * @return {object} 400 - Bad request - application/json
  * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-router.get('/:id([0-9]+)/orders', authenticateToken, userController.getAllOrdersOfUser);
 
+router.get('/:id/orders', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(userController.getAllOrdersOfUser.bind(userController)));
 
 /**
  * PATCH /users/{id}
@@ -127,13 +228,28 @@ router.get('/:id([0-9]+)/orders', authenticateToken, userController.getAllOrders
  * @param {number} id.path.required - id of the user to update
  * @param {User} request.body.required - User info
  * @return {User} 200 - User updated - application/json
+* @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
  * @return {object} 400 - Bad request - application/json
- * @return {object} 404 - User not found - application/json
- * @return {object} 500 - Internal server error - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.patch('/:id', authenticateToken, controllerHandler(userController.update.bind(userController)));
-
+router.patch('/:id', authenticateToken, validate(userSchemas.userSchema.patch, 'body'), controllerHandler(userController.update.bind(userController)));
 
 /**
  * DELETE /users/{id}
@@ -141,12 +257,28 @@ router.patch('/:id', authenticateToken, controllerHandler(userController.update.
  * @tags User
  * @security bearerAuth
  * @param   {[number]} id.path          [id description]
- * @return  {[]} 200 -              [success response]
- * @return {[object]}  422 -            [unprocessable entity error]
+ * @return  {[]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-
-router.delete('/:id',authenticateToken, controllerHandler(userController.deleteOne.bind(userController)));
-
+router.delete('/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(userController.deleteOne.bind(userController)));
 
 export default router;

@@ -11,17 +11,20 @@ API backend pour la gestion des produits, utilisateurs et catégories d'une pép
 - PostgreSQL
 - Dotenv
 - Nodemon
-- bcrypt
-- cors
+- Bcrypt
+- Cors
+- Express-jsdoc-swagger
+- Joi
+- Jsonwebtoken
 
 ## Installation
 - Cloner ou télécharger le projet depuis son dépôt GitHub
 - Naviguez vers le répertoire du projet.
-- Créer de la BDD : createdb pepine
+- Créer la BDD : createdb pepine
 - Installer des package : `npm i`
 - Créer du fichier ".env" sur la base de ".env.example"
 - Créer du fichier ".sqitch.conf" sur la base de "..sqitch.example.conf"
-- Déployer les migrations : sqitch deploy / re-déploiyer les migrations : `resetdb` (script)
+- Déployer les migrations : sqitch deploy / re-déployer les migrations : `resetdb` (script)
 - Lancer l'app. : `npm run dev` (script)
 
 ## Configuration
@@ -42,28 +45,7 @@ API backend pour la gestion des produits, utilisateurs et catégories d'une pép
 
 ## Utilisation
 
-**Route disponible:**
+Une fois, le serveur en route, ouvrez un navigateur avec l'adresse affiché par le serveur ou votre hébergeur, vous devriez vous trouver sur la page d'accueil de Swagger.
 
-**/products/** = create ok + get ok (table product)
+Dans Swagger vous retrouvez toutes les routes et valeurs disponibles pour cette API.
 
-**/products/:id** = get ok + patch ok (table product)
-
-**/products/media** = create ok (table media)
-
-**/products/:id/media** = patch ok (table media)
-
-**/products/media/order** = create ok (table product_has_media)
-
-**/products/category** = create ok (table product_has_category)
-
-**/products/:id/categories** = patch ok (table product_has_category)
-
-**/users/** = create ok (table user)
-
-**/users/:id** = patch ok (table user)
-
-**/orders/** = create ok (table order)
-
-**/orders/details** = create ok (table order_has_product)
-
-**/orders/:id/update-status** = patch ok (table order)

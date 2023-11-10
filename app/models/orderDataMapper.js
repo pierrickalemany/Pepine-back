@@ -5,6 +5,10 @@ import CoreDataMapper from './CoreDataMapper.js';
 const debug = Debug('pepine:DataMapper:order');
 
 // Create a order data mapper
+/**
+ * A class representing a data mapper for orders.
+ * @extends CoreDataMapper
+ */
 class OrderDataMapper extends CoreDataMapper {
   static tableName = 'order';
 
@@ -16,9 +20,9 @@ class OrderDataMapper extends CoreDataMapper {
   static viewname = 'getAllOrders';
 
   /**
-   * fetch all entries
-   *
-   * @returns {array} array of entries
+   * Fetch all orders from the database.
+   * @async
+   * @returns {Promise<Array>} An array of orders.
    */
   async findAllOrders() {
     debug(`${this.constructor.name} findAllOrders`);
@@ -35,11 +39,11 @@ class OrderDataMapper extends CoreDataMapper {
   }
 
   /**
-     * fetch an entry according to its id
-     *
-     * @param {number} id - id of the entry
-     * @returns an entry
-     */
+   * Fetch an order by its ID.
+   * @async
+   * @param {number} orderId - The ID of the order to fetch.
+   * @returns {Promise<Object>} The order object.
+   */
   async findOrderByPk(orderId) {
     debug(`${this.constructor.name} findOrderByPk(${orderId})`);
     const dataSource = this.constructor.viewname;
@@ -56,8 +60,7 @@ class OrderDataMapper extends CoreDataMapper {
   }
 
   /**
-   * create a order data mapper
-   *
+   * Create an instance of the OrderDataMapper class.
    * @augments CoreDataMapper
    */
   constructor() {
@@ -66,11 +69,11 @@ class OrderDataMapper extends CoreDataMapper {
   }
 
   /**
-   * Updates the status of an order in the database.
+   * Update the status of an order in the database.
    * @async
-   * @param {number} order_id - The ID of the order to update.
-   * @param {string} new_status - The new status of the order.
-   * @returns {Promise<Object>} - The updated order object.
+   * @param {number} orderId - The ID of the order to update.
+   * @param {string} newStatus - The new status of the order.
+   * @returns {Promise<Object>} The updated order object.
    */
   updateOrderStatus = async (orderId, newStatus) => {
     debug(`${this.constructor.name} updateOrderStatus`);

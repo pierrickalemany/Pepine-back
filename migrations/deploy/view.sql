@@ -24,6 +24,7 @@ CREATE VIEW getAllProducts AS
         p.status,
         p.created_at,
         p.updated_at,
+        sum(p.price + p.vat) AS price_incl_VAT,
         y.value AS yield_value,
         hz.value AS hardiness_zone_value,
         wr.value AS water_requirement_value,
@@ -88,7 +89,7 @@ CREATE VIEW getAllOrders AS
         p.name AS product_name,
         p.price AS product_price,
         ohp.quantity AS quantity_ordered,
-        p.price * ohp.quantity AS subtotal_price
+        p.vat AS vat
     FROM "order" o
     JOIN order_has_product ohp ON o.id = ohp.order_id
     JOIN product p ON ohp.product_id = p.id

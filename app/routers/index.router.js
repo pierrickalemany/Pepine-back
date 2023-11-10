@@ -7,7 +7,6 @@ import apiErrorHandler from '../errors/helpers/apiErrorHandler.js';
 import apiController from '../controllers/api/index.js';
 import categoryRouter from './category.js';
 
-
 /**
  * @typedef {object} ResponseError response error
  * @property {string} error the error string

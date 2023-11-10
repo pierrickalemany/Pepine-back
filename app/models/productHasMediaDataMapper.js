@@ -5,6 +5,10 @@ import client from './helpers/database.js';
 const debug = Debug('pepine:DataMapper:product_has_media');
 
 // Create a product_has_media data mapper
+/**
+ * A class representing a data mapper for the product_has_media table in the database.
+ * @extends CoreDataMapper
+ */
 class ProductHasMediaDataMapper extends CoreDataMapper {
   static tableName = 'product_has_media';
 
@@ -14,8 +18,7 @@ class ProductHasMediaDataMapper extends CoreDataMapper {
   static updateFunc = 'update_product_media';
 
   /**
-   * create a product_has_media data mapper
-   *
+   * Creates a new instance of the ProductHasMediaDataMapper class.
    * @augments CoreDataMapper
    */
   constructor() {
@@ -26,8 +29,8 @@ class ProductHasMediaDataMapper extends CoreDataMapper {
   /**
    * Updates the media URLs of a product in the database.
    * @async
-   * @param {number} product_id - The ID of the product to update.
-   * @param {string[]} new_media_urls - An array of new media URLs to set for the product.
+   * @param {number} productId - The ID of the product to update.
+   * @param {string[]} newMediaUrls - An array of new media URLs to set for the product.
    * @returns {Promise<Object>} - A Promise that resolves to the updated product data.
    */
   updateProductMedias = async (productId, newMediaUrls) => {

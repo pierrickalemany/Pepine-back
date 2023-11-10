@@ -116,13 +116,13 @@ CREATE FUNCTION create_order(json) RETURNS "order" AS $$
 $$ LANGUAGE sql STRICT VOLATILE;
 
 CREATE FUNCTION create_order_has_product(json) RETURNS "order_has_product" AS $$
-	INSERT INTO "order_has_product" ("product_id", "order_id", "quantity", "price_time_order", "subtotal_price")
+	INSERT INTO "order_has_product" ("product_id", "order_id", "quantity", "price_time_order", "vat")
 	VALUES (
 		($1->>'product_id')::int,
 	    ($1->>'order_id')::int,
 	    ($1->>'quantity')::int, 
 		($1->>'price_time_order')::numeric, 
-		($1->>'subtotal_price')::numeric 
+		($1->>'vat')::numeric 
 	)
 	RETURNING *;
 $$ LANGUAGE sql STRICT VOLATILE;

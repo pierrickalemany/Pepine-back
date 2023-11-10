@@ -4,7 +4,7 @@
 GET {{apiEndpoint}}/products
 
 ### One product
-GET {{apiEndpoint}}/products/1
+GET {{apiEndpoint}}/products/4
 
 ### Categories
 GET {{apiEndpoint}}/categories/
@@ -17,15 +17,18 @@ GET {{apiEndpoint}}/categories/3/products
 
 ### Orders
 GET {{apiEndpoint}}/orders
+Authorization: Bearer <Your_Token_Here>
 
 ### One order
 GET {{apiEndpoint}}/orders/2
+Authorization: Bearer <Your_Token_Here>
 
 ### Users
 GET {{apiEndpoint}}/users
 
 ### One user account
-GET {{apiEndpoint}}/users/5
+GET {{apiEndpoint}}/users/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjk5NDU2NjMyLCJleHAiOjE2OTk0NjAyMzJ9.JcatDncMbCHT9fkKJw9KEKucf1Nt4AoOUlfZO_D8yJM
 
 ### Orders of user account
 GET {{apiEndpoint}}/users/3/orders
@@ -33,6 +36,7 @@ GET {{apiEndpoint}}/users/3/orders
 ### Modify User 1
 PATCH  {{apiEndpoint}}/users/1
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {  
    "first_name": "Serge",
@@ -44,6 +48,7 @@ Content-Type: application/json
 ### Modify Status Order 1
 PATCH {{apiEndpoint}}/orders/1/update-status
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
     "newStatus": "validé"
@@ -52,6 +57,7 @@ Content-Type: application/json
 ### Modify Categories of a product 1
 PATCH {{apiEndpoint}}/products/1/categories
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
     "categoryIds": [1, 2, 3]
@@ -60,6 +66,7 @@ Content-Type: application/json
 ### Modify Url Medias for 1 product
 PATCH {{apiEndpoint}}/products/1/media
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
     "newMediaUrls": [
@@ -71,6 +78,7 @@ Content-Type: application/json
 ### Modify Product 1
 PATCH  {{apiEndpoint}}/products/1
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {  
    "name" : "test 1", 
@@ -99,6 +107,7 @@ Content-Type: application/json
 ### Product creation
 POST {{apiEndpoint}}/products/
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
    "name": "Ciboulette",
@@ -139,6 +148,7 @@ Content-Type: application/json
 ### Media creation
 POST {{apiEndpoint}}/products/media
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 [
  {
@@ -154,6 +164,7 @@ Content-Type: application/json
 ### Product_has_media creation
 POST {{apiEndpoint}}/products/media/order
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 [
  {
@@ -171,6 +182,7 @@ Content-Type: application/json
 ### order creation
 POST {{apiEndpoint}}/orders/
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
    "first_name_order": "blublu",
@@ -183,18 +195,20 @@ Content-Type: application/json
 ### order_has_product creation
 POST {{apiEndpoint}}/orders/details
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
    "product_id": 1,
    "order_id": 1,
    "quantity": 12,
    "price_time_order": 12.52,
-   "subtotal_price": 152.12
+   "vat": 5.5
 }
 
 ### Product_has_category creation
 POST {{apiEndpoint}}/products/category
 Content-Type: application/json
+Authorization: Bearer <Your_Token_Here>
 
 {
    "product_id": 1,
@@ -206,10 +220,11 @@ POST {{apiEndpoint}}/users/register
 Content-Type: application/json
 
 {
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "john.doe@example.com",
-  "password": "securepassword123"
+  "first_name": "super",
+  "last_name": "pepine",
+  "email": "pepine@gmail.com",
+  "password": "Pepine12345*",
+  //"role": "admin"
 }
 
 
@@ -218,11 +233,18 @@ POST {{apiEndpoint}}/users/login
 Content-Type: application/json
 
 {
-   "email": "john.doe@example.com",
-   "password": "securepassword123"
+   "email": "pepine@gmail.com",
+   "password": "Pepine12345*"
 }
 ### media delete
 DELETE {{ apiEndpoint }}/products/media/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk5NjE0NjQ2LCJleHAiOjE2OTk2MTgyNDZ9.i71DnEdYPmdUK9IWuZDhcRb-CFpV9CXuMeOrfEvGkQo
 
-### media delete
-DELETE {{ apiEndpoint }}/products/media/3
+
+### user delete
+DELETE {{ apiEndpoint }}/users/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjk5NTI4NzY4LCJleHAiOjE2OTk1MzIzNjh9.Bta1N1clHPl3bvmz4jqWyK-Rf53J24TFf1CL_e9GGic
+
+{
+  "targetId": 7
+}

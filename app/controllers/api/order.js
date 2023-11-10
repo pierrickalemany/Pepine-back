@@ -1,10 +1,16 @@
 import Debug from 'debug';
 import CoreController from './CoreController.js';
 import orderDataMapper from '../../models/orderDataMapper.js';
+import NoRessourceFoundError from '../../errors/NoRessourceFoundError.js';
 
 const debug = Debug('pepine:controllers:order');
 
 /** Class representing a order controller. */
+/**
+ * Controller for handling orders.
+ * @class
+ * @augments CoreController
+ */
 class OrderController extends CoreController {
   static dataMapper = orderDataMapper;
 
@@ -12,10 +18,8 @@ class OrderController extends CoreController {
   static dataNames = 'order';
 
   /**
-   * create a order controller
-  *
-  * @augments CoreController
-  */
+   * Creates an instance of OrderController.
+   */
   constructor() {
     super();
 
@@ -40,10 +44,12 @@ class OrderController extends CoreController {
   };
 
   /**
-   * responds with all entries from a table
-   *
-   * @param {Object} _
-   * @param {Object} response
+   * Responds with all entries from a table.
+   * @async
+   * @function getAllOrders
+   * @param {Object} _ - The request object (unused).
+   * @param {Object} response - The response object.
+   * @returns {Object} The response object with the orders data.
    */
   getAllOrders = async (_, response) => {
     debug(`${this.constructor.name} getAllOrders`);
@@ -54,15 +60,23 @@ class OrderController extends CoreController {
   };
 
   /**
-      * responds with one entry from a table
-      *
-      * @param {Object} request
-      * @param {Object} response
-      */
+   * Responds with one entry from a table.
+   * @async
+   * @function getOneOrder
+   * @param {Object} request - The request object.
+   * @param {Object} response - The response object.
+   * @returns {Object} The response object with the order data.
+   */
   getOneOrder = async (request, response) => {
     debug(`${this.constructor.name} getOneOrder`);
     const { id } = request.params;
     const result = await this.constructor.dataMapper.findOrderByPk(id);
+
+    // Check if the result is not null
+    if (!result) {
+      throw new NoRessourceFoundError();
+    }
+
     const responseObject = { statut: 'success', data: { } };
     responseObject.data[this.constructor.dataNames] = result;
     return response.json(responseObject);

@@ -4,6 +4,10 @@ import CoreDataMapper from './CoreDataMapper.js';
 const debug = Debug('pepine:DataMapper:product');
 
 // Create a product data mapper
+/**
+ * Represents a data mapper for the Product model.
+ * @extends CoreDataMapper
+ */
 class ProductDataMapper extends CoreDataMapper {
   static tableName = 'product';
 
@@ -17,9 +21,8 @@ class ProductDataMapper extends CoreDataMapper {
   static updateFunc = 'update_product';
 
   /**
-   * create a product data mapper
-   *
-   * @augments CoreDataMapper
+   * Creates a new instance of the ProductDataMapper class.
+   * @constructor
    */
   constructor() {
     super();

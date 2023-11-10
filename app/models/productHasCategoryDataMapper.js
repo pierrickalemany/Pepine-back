@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import Debug from 'debug';
 import CoreDataMapper from './CoreDataMapper.js';
 import client from './helpers/database.js';
@@ -5,6 +6,10 @@ import client from './helpers/database.js';
 const debug = Debug('pepine:DataMapper:product_has_category');
 
 // Create a product_has_category data mapper
+/**
+ * A class representing a data mapper for the product_has_category table in the database.
+ * @extends CoreDataMapper
+ */
 class ProductHasCategoryDataMapper extends CoreDataMapper {
   static tableName = 'product_has_category';
 
@@ -14,9 +19,8 @@ class ProductHasCategoryDataMapper extends CoreDataMapper {
   static updateFunc = 'update_product_categories';
 
   /**
-   * create a product_has_category data mapper
-   *
-   * @augments CoreDataMapper
+   * Creates a new instance of the ProductHasCategoryDataMapper class.
+   * @constructor
    */
   constructor() {
     super();
@@ -26,10 +30,9 @@ class ProductHasCategoryDataMapper extends CoreDataMapper {
   /**
    * Updates the categories of a product in the database.
    * @async
-   * @param {number} product_id - The ID of the product to update.
-   * @param {number[]} category_ids - An array of category IDs to assign to the product.
-  * @returns {Promise<Object>} - A Promise that resolves to an object
-  * representing the updated product.
+   * @param {number} productId - The ID of the product to update.
+   * @param {number[]} categoryIds - An array of category IDs to assign to the product.
+   * @returns {Promise<Object>} - A Promise that resolves to an object representing the updated product.
    */
   updateProductCategories = async (productId, categoryIds) => {
     debug(`${this.constructor.name} updateProductCategories`);

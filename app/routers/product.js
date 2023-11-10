@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Router } from 'express';
 import productController from '../controllers/api/product.js';
 import mediaController from '../controllers/api/media.js';
@@ -5,7 +6,9 @@ import productHasMediaController from '../controllers/api/productHasMedia.js';
 import productHasCategoryController from '../controllers/api/productHasCategory.js';
 import controllerHandler from '../controllers/helpers/controllerHandler.js';
 import authenticateToken from '../middleware/authenticateToken.js';
-
+import validate from '../validations/validate.js';
+import * as productSchemas from '../validations/schemas/productSchemas.js';
+import * as idSchemas from '../validations/schemas/idSchemas.js';
 
 const router = Router();
 /**
@@ -71,8 +74,27 @@ const router = Router();
  * @summary Get all products
  * @tags Product
  * @produces application/json
- * @return {[Product]} 200 - *Success response*
- * @return {object} 500 - *Internal server error*
+ * @return {[Product]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
 
 router.get('/', controllerHandler(productController.getAll.bind(productController)));
@@ -84,11 +106,29 @@ router.get('/', controllerHandler(productController.getAll.bind(productControlle
  *
  * @param   {[number]} id.path [id description]
  *
- * @return  {[Product]} 200 - [success response]
- * @return {[object]}  404 -            [not found]
- * @return {[object]}  500 - [internal server error]
+ * @return  {[Product]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-router.get('/:id([0-9]+)', controllerHandler(productController.getOne.bind(productController)));
+router.get('/:id', validate(idSchemas.default.idUrl, 'query'), controllerHandler(productController.getOne.bind(productController)));
 
 /**
  * POST /products/
@@ -97,13 +137,29 @@ router.get('/:id([0-9]+)', controllerHandler(productController.getOne.bind(produ
  * @security bearerAuth
  * @param   {[Product]}  request.body [product description]
  *
- * @return  {[Product]} 200 - [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 - [internal server error]
+ * @return  {[Product]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.post('/', authenticateToken, controllerHandler(productController.create.bind(productController)));
-
+router.post('/', authenticateToken, validate(productSchemas.productSchema.post, 'body'), controllerHandler(productController.create.bind(productController)));
 
 /**
  * POST /products/media
@@ -112,13 +168,29 @@ router.post('/', authenticateToken, controllerHandler(productController.create.b
  * @security bearerAuth
  * @param   {[MediaUrl]}  request.body [media description]
  *
- * @return  {[MediaUrl]} 200 - [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 - [internal server error]
+ * @return  {[MediaUrl]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.post('/media', authenticateToken, controllerHandler(mediaController.create.bind(mediaController)));
-
+router.post('/media', authenticateToken, validate(productSchemas.mediaSchema.post, 'body'), controllerHandler(mediaController.create.bind(mediaController)));
 
 /**
  * POST /products/media/order
@@ -127,13 +199,29 @@ router.post('/media', authenticateToken, controllerHandler(mediaController.creat
  * @security bearerAuth
  * @param   {[ProductHasMedia]}  request.body [product media description]
  *
- * @return  {[ProductHasMedia]} 200 - [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 - [internal server error]
+ * @return  {[ProductHasMedia]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.post('/media/order', authenticateToken, controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
-
+router.post('/media/order', authenticateToken, validate(productSchemas.productHasMediaSchema.post, 'body'), controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
 
 /**
  * POST /products/category
@@ -142,13 +230,29 @@ router.post('/media/order', authenticateToken, controllerHandler(productHasMedia
  * @security bearerAuth
  * @param   {[ProductHasCategory]}  request.body [product category description]
  *
- * @return  {[ProductHasCategory]} 200 - [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 - [internal server error]
+ * @return  {[ProductHasCategory]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.post('/category', authenticateToken, controllerHandler(productHasCategoryController.create.bind(productHasCategoryController)));
-
+router.post('/category', authenticateToken, validate(productSchemas.productHasCategorySchema.post, 'body'), controllerHandler(productHasCategoryController.create.bind(productHasCategoryController)));
 
 /**
  * PATCH /products/{id}
@@ -158,13 +262,29 @@ router.post('/category', authenticateToken, controllerHandler(productHasCategory
  * @param   {[number]} id.path          [id description]
  * @param   {[Product]}  request.body      [product description]
  *
- * @return  {[Product]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 -            [internal server error]
+ * @return  {[Product]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.patch('/:id', authenticateToken, controllerHandler(productController.update.bind(productController)));
-
+router.patch('/:id', authenticateToken, authenticateToken, validate(productSchemas.productSchema.patch, 'body'), controllerHandler(productController.update.bind(productController)));
 
 /**
  * PATCH /products/{id}/categories
@@ -174,13 +294,29 @@ router.patch('/:id', authenticateToken, controllerHandler(productController.upda
  * @param   {[number]} id.path          [id description]
  * @param   {[ProductHasCategory]}  request.body      [product category description]
  *
- * @return  {[ProductHasCategory]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 -            [internal server error]
+ * @return  {[ProductHasCategory]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.patch('/:id/categories', authenticateToken, controllerHandler(productHasCategoryController.updateProductCategories.bind(productHasCategoryController)));
-
+router.patch('/:id/categories', authenticateToken, validate(productSchemas.productHasCategorySchema.patch, 'body'), controllerHandler(productHasCategoryController.updateProductCategories.bind(productHasCategoryController)));
 
 /**
  * PATCH /products/{id}/media
@@ -190,13 +326,29 @@ router.patch('/:id/categories', authenticateToken, controllerHandler(productHasC
  * @param   {[number]} id.path          [id description]
  * @param   {[Media]}  request.body      [product media description]
  *
- * @return  {[Media, ProductHasMedia]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  500 -            [internal server error]
+ * @return  {[Media, ProductHasMedia]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-
-router.patch('/:id/media', authenticateToken, controllerHandler(productHasMediaController.updateProductMedias.bind(productHasMediaController)));
-
+router.patch('/:id/media', authenticateToken, validate(productSchemas.productHasMediaSchema.patch, 'body'), controllerHandler(productHasMediaController.updateProductMedias.bind(productHasMediaController)));
 
 /**
  * DELETE producte/media/{id}
@@ -204,12 +356,29 @@ router.patch('/:id/media', authenticateToken, controllerHandler(productHasMediaC
  * @tags Product
  * @security bearerAuth
  * @param   {[number]} id.path          [id description]
- * @return  {[]} 200 -              [success response]
- * @return {[object]}  400 -            [bad request]
- * @return {[object]}  422 -            [unprocessable entity error]
+ * @return  {[]} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
 
-router.delete('/media/:id', authenticateToken, controllerHandler(mediaController.deleteOne.bind(mediaController)));
-
+router.delete('/media/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(mediaController.deleteOne.bind(mediaController)));
 
 export default router;

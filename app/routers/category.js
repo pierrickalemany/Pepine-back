@@ -1,5 +1,9 @@
+/* eslint-disable max-len */
 import { Router } from 'express';
 import categoryController from '../controllers/api/category.js';
+import controllerHandler from '../controllers/helpers/controllerHandler.js';
+import validate from '../validations/validate.js';
+import * as idSchemas from '../validations/schemas/idSchemas.js';
 
 const router = Router();
 /**
@@ -45,10 +49,28 @@ const router = Router();
  * @summary Get all categories
  * @tags category
  * @return {Category} 200 - User created - application/json
- * @return {object} 400 - Bad request - application/json
  * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-router.get('/', categoryController.getAll);
+router.get('/', controllerHandler(categoryController.getAll.bind(categoryController)));
 
 /**
  * GET /categories/{id}
@@ -56,10 +78,29 @@ router.get('/', categoryController.getAll);
  * @tags category
  * @param {number} id.path.required - id of the category to get
  * @return {Category} 200 - User created - application/json
- * @return {object} 400 - Bad request - application/json
  * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
 */
-router.get('/:id([0-9]+)', categoryController.getOne);
+
+router.get('/:id', validate(idSchemas.default.idUrl, 'query'), controllerHandler(categoryController.getOne.bind(categoryController)));
 
 /**
  * Get /categories/{id}/products
@@ -67,9 +108,28 @@ router.get('/:id([0-9]+)', categoryController.getOne);
  * @tags category
  * @param {number} id.path.required - id of the category to get
  * @return {[CategoryProduct]} 200 - User created - application/json
+* @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
  * @return {object} 400 - Bad request - application/json
- * @return {object} 500 - Internal server error - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
  */
-router.get('/:id([0-9]+)/products', categoryController.getAllProductsOfCategory);
+
+router.get('/:id/products', validate(idSchemas.default.idUrl, 'query'), controllerHandler(categoryController.getAllProductsOfCategory.bind(categoryController)));
 
 export default router;

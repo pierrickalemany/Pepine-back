@@ -3,11 +3,15 @@ import client from './helpers/database.js';
 
 const debug = Debug('pepine:CoreDataMapper');
 
+/**
+ * A class representing a data mapper for a core data model.
+ */
 class CoreDataMapper {
   /**
-   * fetch all entries
+   * Fetch all entries.
    *
-   * @returns {array} array of entries
+   * @async
+   * @returns {Promise<Array>} An array of entries.
    */
   async findAll() {
     debug(`${this.constructor.name} findAll`);
@@ -21,10 +25,11 @@ class CoreDataMapper {
   }
 
   /**
-   * fetch an entry according to its id
+   * Fetch an entry according to its id.
    *
-   * @param {number} id - id of the entry
-   * @returns an entry
+   * @async
+   * @param {number} id - The id of the entry.
+   * @returns {Promise<Object>} An entry.
    */
   async findByPk(id) {
     debug(`${this.constructor.name} findByPk(${id})`);
@@ -38,10 +43,11 @@ class CoreDataMapper {
   }
 
   /**
-   * create a new entry
+   * Create a new entry.
    *
-   * @param {Object} obj - the entry to create
-   * @returns {Object} the created entry
+   * @async
+   * @param {Object} createObj - The entry to create.
+   * @returns {Promise<Object>} The created entry.
    */
   async create(createObj) {
     debug(`${this.constructor.name} create`);
@@ -58,9 +64,10 @@ class CoreDataMapper {
 
   /**
    * Updates a record in the database.
+   *
    * @async
    * @param {Object} updateObj - The object containing the updated data.
-   * @returns {Object} The updated record.
+   * @returns {Promise<Object>} The updated record.
    */
   async update(updateObj) {
     debug(`${this.constructor.name} update ${updateObj.id}`);
@@ -73,9 +80,11 @@ class CoreDataMapper {
   }
 
   /**
-   * remove an entry
+   * Remove an entry.
    *
-   * @param {number} id - the entry id
+   * @async
+   * @param {number} id - The entry id.
+   * @returns {Promise<number>} The number of deleted rows.
    */
   async delete(id) {
     debug(`${this.constructor.name} delete(${id})`);

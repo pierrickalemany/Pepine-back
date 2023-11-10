@@ -11,8 +11,8 @@ CHECK(
 CREATE TABLE
     "user"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "first_name" TEXT NOT NULL CHECK (LENGTH("first_name") <= 20),
-        "last_name" TEXT NOT NULL CHECK (LENGTH("last_name") <= 20),
+        "first_name" TEXT NOT NULL CHECK (LENGTH("first_name") <= 50),
+        "last_name" TEXT NOT NULL CHECK (LENGTH("last_name") <= 50),
         "email" email NOT NULL UNIQUE CHECK (LENGTH("email") <= 50),
         "password" TEXT NOT NULL UNIQUE,
         "role" TEXT NOT NULL DEFAULT 'user',
@@ -109,7 +109,7 @@ CREATE TABLE
     "product"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         "name" TEXT NOT NULL CHECK (LENGTH("name") <= 50),
-        "scientific_name" TEXT NOT NULL CHECK (LENGTH("scientific_name") <= 50),
+        "scientific_name" TEXT NOT NULL CHECK (LENGTH("scientific_name") <= 100),
         "maturity_height" TEXT CHECK (LENGTH("maturity_height") <= 50),
         "maturity_width" TEXT CHECK (LENGTH("maturity_width") <= 50),
         "family" TEXT CHECK (LENGTH("family") <= 50),
@@ -161,7 +161,7 @@ CREATE TABLE
         "order_id" INT REFERENCES "order"(id),
         "quantity" INT NOT NULL CHECK (quantity >= 0),
         "price_time_order" NUMERIC(5, 2) NOT NULL,
-        "subtotal_price" NUMERIC(5, 2) NOT NULL,
+        "vat" NUMERIC NOT NULL,
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );

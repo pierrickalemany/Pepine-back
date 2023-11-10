@@ -5,6 +5,10 @@ import CoreDataMapper from './CoreDataMapper.js';
 const debug = Debug('pepine:DataMapper:category');
 
 // Create a category data mapper
+/**
+ * A class representing a data mapper for categories.
+ * @extends CoreDataMapper
+ */
 class CategoryDataMapper extends CoreDataMapper {
   static tableName = 'category';
 
@@ -13,10 +17,10 @@ class CategoryDataMapper extends CoreDataMapper {
   // static updateFunc = 'update_category';
 
   /**
-   * fetch all entries from according to category id
+   * Fetch all entries from according to category id.
    *
-   * @param {number} id - id of the entry
-   * @returns {array} array of entries
+   * @param {number} id - The id of the category.
+   * @returns {array} An array of entries.
    */
   async findAllProductsOfCategory(id) {
     debug(`${this.constructor.name} findAllProductsOfCategory(${id})`);
@@ -36,7 +40,7 @@ class CategoryDataMapper extends CoreDataMapper {
   }
 
   /**
-   * create a category data mapper
+   * Create a category data mapper.
    *
    * @augments CoreDataMapper
    */

@@ -2,7 +2,7 @@
 
 BEGIN;
 
-    DROP VIEW getAllOrders;
-    DROP VIEW getAllProducts;
+    DROP VIEW IF EXISTS getAllOrders;
+    DROP VIEW IF EXISTS getAllProducts;
 
 COMMIT;

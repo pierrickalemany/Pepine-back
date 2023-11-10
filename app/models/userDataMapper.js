@@ -6,6 +6,10 @@ import CoreDataMapper from './CoreDataMapper.js';
 const debug = Debug('pepine:DataMapper:user');
 
 // Create a user data mapper
+/**
+ * A class representing a user data mapper that extends CoreDataMapper.
+ * @extends CoreDataMapper
+ */
 class UserDataMapper extends CoreDataMapper {
   static tableName = 'user';
 
@@ -18,10 +22,10 @@ class UserDataMapper extends CoreDataMapper {
   static getAllOrdersview = 'getAllOrders';
 
   /**
-   * fetch all order from a user
+   * Fetch all orders from a user.
    *
-   * @param {number} id - id of the entry
-   * @returns {array} array of entries
+   * @param {number} userId - The ID of the user.
+   * @returns {Promise<Array>} An array of orders.
    */
   async findAllOrdersOfUser(userId) {
     debug(`${this.constructor.name} findAllOrdersOfUser(${userId})`);
@@ -35,33 +39,22 @@ class UserDataMapper extends CoreDataMapper {
   }
 
   /**
-   * create a user data mapper
+   * Creates a user.
    *
-   * @augments CoreDataMapper
+   * @param {object} userData - The user data.
+   * @param {string} userData.email - The user email.
+   * @param {string} userData.password - The user password.
+   * @param {string} userData.firstname - The user firstname.
+   * @param {string} userData.lastname - The user lastname.
+   * @returns {Promise<object>} The created user.
    */
-  constructor() {
-    super();
-    debug('user data mapper created');
-  }
-
-  /**
-   * create a user
-   * @param {object} user - user to create
-   * @param {string} user.email - user email
-   * @param {string} user.password - user password
-   * @param {string} user.firstname - user firstname
-   * @param {string} user.lastname - user lastname
-   *
-   * @returns {Promise<object>} created user
-   */
-
   async createUser(userData) {
     debug('Creating User');
     // hash password
     const hashedPassword = await bcrypt.hash(userData.password, 10);
     // create user with hashed password
     const userWithHashedPassword = {
-      ...userData,
+      ...userData, // rest paramater
       password: hashedPassword,
     };
     // call sql function
@@ -69,28 +62,20 @@ class UserDataMapper extends CoreDataMapper {
       text: `SELECT * FROM ${this.constructor.insertFunc}($1)`,
       values: [JSON.stringify(userWithHashedPassword)],
     };
+    const { rows } = await client.query(query);
+    const user = rows[0];
+    debug('User created');
 
-    try {
-      const { rows } = await client.query(query);
-      const user = rows[0];
-      debug('User created');
-      return user;
-    } catch (error) {
-      debug('Error creating user:', error);
-      throw error;
-    }
+    return user;
   }
 
   /**
-   * find a user by email
-   * @param {string} email - user email
-   * @returns {Promise<object>} found user
-   * @returns {Promise<undefined>} if user not found
-   * @returns {Promise<Error>} if error
-   * @throws {Error} if user not found
+   * Finds a user by email.
    *
-  */
-
+   * @param {string} email - The user email.
+   * @returns {Promise<object>} The found user.
+   * @throws {Error} If user not found.
+   */
   async findUserByEmail(email) {
     debug('Finding user by email');
     debug(`SQL function ${this.constructor.tableName} called`);
@@ -99,16 +84,19 @@ class UserDataMapper extends CoreDataMapper {
       text: `SELECT * FROM "${this.constructor.tableName}" WHERE email = $1`,
       values: [email],
     };
-    try {
-      const { rows } = await client.query(query);
-      const user = rows[0];
-      debug('User found. Connexion successfull');
+    const { rows } = await client.query(query);
+    const user = rows[0];
+    debug('User found. Connexion successfull');
 
-      return user;
-    } catch (error) {
-      debug('Error finding user:', error);
-      throw error;
-    }
+    return user;
+  }
+
+  /**
+   * Creates a new instance of UserDataMapper.
+   */
+  constructor() {
+    super();
+    debug('user data mapper created');
   }
 }
 

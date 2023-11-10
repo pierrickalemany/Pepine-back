@@ -5,6 +5,11 @@ import orderHasProductDataMapper from '../../models/orderHasProductDataMapper.js
 const debug = Debug('pepine:controllers:order_has_product');
 
 /** Class representing a order_has_product controller. */
+/**
+ * Controller for managing the relationship between orders and products.
+ * @class
+ * @augments CoreController
+ */
 class OrderHasProductController extends CoreController {
   static dataMapper = orderHasProductDataMapper;
 
@@ -12,10 +17,9 @@ class OrderHasProductController extends CoreController {
   static dataNames = 'order_has_product';
 
   /**
-   * create a order_has_product controller
-  *
-  * @augments CoreController
-  */
+   * Creates a new instance of the OrderHasProductController class.
+   * @constructor
+   */
   constructor() {
     super();
 
