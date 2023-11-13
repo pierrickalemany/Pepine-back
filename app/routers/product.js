@@ -168,7 +168,8 @@ router.post('/', authenticateToken, validate(productSchemas.productSchema.post, 
  * @summary Create a new media for a product
  * @tags Product
  * @security bearerAuth
- * @param   {[MediaUrl]}  request.body [media description]
+ * @consumes multipart/form-data
+ * @param {file} images.formData - Media file to upload
  *
  * @return  {[MediaUrl]} 200 - Success response - application/json
  * @return {object} 500 - Internal server error - application/json
