@@ -29,7 +29,7 @@ class MediaDataMapper extends CoreDataMapper {
 
   /**
    * Creates a new instance of the MediaDataMapper class.
-   */
+  */
   constructor() {
     super();
     debug('media data mapper created');

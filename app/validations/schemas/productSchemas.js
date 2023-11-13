@@ -4,7 +4,7 @@ import Joi from 'joi';
 // "http" or "https". The URL must start with one of these protocols.
 // (jpg|jpeg|png|gif|bmp|svg): This matches one of the specified image file extensions.
 // The URL must end with one of these extensions.
-const urlRegex = /^(http|https):\/\/[^ "']+\\.(jpg|jpeg|png|gif|bmp|svg)$/;
+// const urlRegex = /^(http|https):\/\/[^ "']+\\.(jpg|jpeg|png|gif|bmp|svg)$/;
 
 const productSchema = {
   post: Joi.object({
@@ -61,12 +61,10 @@ const productSchema = {
   }).min(1),
 };
 
-const mediaSchema = {
-  post: Joi.object({
-    url: Joi.string().pattern(urlRegex),
-    name: Joi.string().max(50),
-  }),
-};
+const mediaSchema = Joi.array().items(Joi.object({
+  url: Joi.string().required(),
+  name: Joi.string().max(50).required(),
+}));
 
 const productHasCategorySchema = {
   post: Joi.object({
@@ -76,10 +74,10 @@ const productHasCategorySchema = {
   patch: Joi.object({
     product_id: Joi.number().integer().positive(),
     category_id: Joi.number().integer().positive(),
-  }).min(1),
+  }),
 };
 
-const productHasMediaSchema = {
+const productHasMediaSchema = Joi.array().items(Joi.object({
   post: Joi.object({
     product_id: Joi.number().integer().positive().required(),
     media_id: Joi.number().integer().positive().required(),
@@ -90,7 +88,7 @@ const productHasMediaSchema = {
     media_id: Joi.number().integer().positive(),
     order: Joi.number().integer().positive(),
   }).min(1),
-};
+}));
 
 export {
   productSchema,

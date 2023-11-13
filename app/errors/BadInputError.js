@@ -9,7 +9,7 @@ class BadInputError extends Error {
      */
   constructor(originalError) {
     super('Bad input error');
-    if (originalError) {
+    if (originalError instanceof Error && originalError.details && originalError.details[0]) {
       this.originalError = originalError;
       this.detail = this.originalError.details[0].message;
     }

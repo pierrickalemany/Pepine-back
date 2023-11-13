@@ -9,6 +9,8 @@ import authenticateToken from '../middleware/authenticateToken.js';
 import validate from '../validations/validate.js';
 import * as productSchemas from '../validations/schemas/productSchemas.js';
 import * as idSchemas from '../validations/schemas/idSchemas.js';
+import multerMiddleware from '../middleware/multerSharp.js';
+import handleUploadedFiles from '../middleware/handleUploadedFiles.js';
 
 const router = Router();
 /**
@@ -190,7 +192,7 @@ router.post('/', authenticateToken, validate(productSchemas.productSchema.post, 
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.post('/media', authenticateToken, validate(productSchemas.mediaSchema.post, 'body'), controllerHandler(mediaController.create.bind(mediaController)));
+router.post('/media', authenticateToken, multerMiddleware, handleUploadedFiles, validate(productSchemas.mediaSchema), controllerHandler(mediaController.create.bind(mediaController)));
 
 /**
  * POST /products/media/order

@@ -1,19 +1,18 @@
 import Debug from 'debug';
 import BadInputError from '../errors/BadInputError.js';
-
 /*
- * validate module.
- * @module validate
- */
+* validate module.
+* @module validate
+*/
 const debug = Debug('pepine:validatation');
 
 /**
  * Factory returning a validation middleware
- *
- * @param {Object} schema - a Joi schema
- * @param {('query'|'body'|'params')} dataSource - the source object
- * @returns {function} a validation middleware
- */
+*
+* @param {Object} schema - a Joi schema
+* @param {('query'|'body'|'params')} dataSource - the source object
+* @returns {function} a validation middleware
+*/
 function validate(schema, dataSource) {
   debug('create a new validation middleware');
   return async (request, response, next) => {

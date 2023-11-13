@@ -147,24 +147,21 @@ Content-Type: application/json
 
 ### Media creation
 POST {{apiEndpoint}}/products/media
-Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk4NjU4NjAsImV4cCI6MTY5OTg2OTQ2MH0.ACVfn9J6nf_ZIuqNp8yDqlm0uAQKhlKd5vG3s6Xc2mk
 
-[
- {
-    "url": "https://www.naturephotographie.com/wp-content/uploads/2019/02/Rays-of-Light-on-the-Summit-1461x975.jpg",
-    "name": "test"
- },
- {
-    "url": "https://www.mangiarebuono.it/wp-content/uploads/2016/02/ananas3.jpg",
-    "name": "essai"
- }
-]
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="images"; filename="fraise-triste-404.jpg"
+Content-Type: image/jpeg
+
+{{@file("./app/docs/sendPicture/fraise-triste-404.jpg")}}
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
 
 ### Product_has_media creation
 POST {{apiEndpoint}}/products/media/order
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk3MDg5NDMsImV4cCI6MTY5OTcxMjU0M30.y8zIXx3oC_jo2c2iIhD795GBVJlEonlXebPDwT6E158
 
 [
  {
@@ -182,7 +179,7 @@ Authorization: Bearer <Your_Token_Here>
 ### order creation
 POST {{apiEndpoint}}/orders/
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer Joi.array().items(Joi.object({
 
 {
    "first_name_order": "blublu",
@@ -195,7 +192,7 @@ Authorization: Bearer <Your_Token_Here>
 ### order_has_product creation
 POST {{apiEndpoint}}/orders/details
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk4Njk0ODQsImV4cCI6MTY5OTg3MzA4NH0.b_9g60gOsC1ywu3tKdqj_iKtbwPOXIAgFTOZMzwAhgA
 
 {
    "product_id": 1,
@@ -208,7 +205,7 @@ Authorization: Bearer <Your_Token_Here>
 ### Product_has_category creation
 POST {{apiEndpoint}}/products/category
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk3MDkxNzgsImV4cCI6MTY5OTcxMjc3OH0.hlXm5AJldr39zqNBQlcr-kG2hYVLUMEmiQ5PCfXxi9Y
 
 {
    "product_id": 1,
@@ -220,10 +217,10 @@ POST {{apiEndpoint}}/users/register
 Content-Type: application/json
 
 {
-  "first_name": "super",
-  "last_name": "pepine",
-  "email": "pepine@gmail.com",
-  "password": "Pepine12345*",
+  "first_name": "super11",
+  "last_name": "pepine11",
+  "email": "pepine11@gmail.com",
+  "password": "Pepine1112345*"
   //"role": "admin"
 }
 
@@ -233,17 +230,17 @@ POST {{apiEndpoint}}/users/login
 Content-Type: application/json
 
 {
-   "email": "pepine@gmail.com",
-   "password": "Pepine12345*"
+   "email": "pepine11@gmail.com",
+   "password": "Pepine1112345*"
 }
 ### media delete
 DELETE {{ apiEndpoint }}/products/media/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjk5NjE0NjQ2LCJleHAiOjE2OTk2MTgyNDZ9.i71DnEdYPmdUK9IWuZDhcRb-CFpV9CXuMeOrfEvGkQo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk2MjAwODEsImV4cCI6MTY5OTYyMzY4MX0.69VPI-0yVTRGedtceVTAbBZTBNdzBzRTFx08b2H8T6s
 
 
 ### user delete
 DELETE {{ apiEndpoint }}/users/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjk5NTI4NzY4LCJleHAiOjE2OTk1MzIzNjh9.Bta1N1clHPl3bvmz4jqWyK-Rf53J24TFf1CL_e9GGic
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk2MjAwODEsImV4cCI6MTY5OTYyMzY4MX0.69VPI-0yVTRGedtceVTAbBZTBNdzBzRTFx08b2H8T6s
 
 {
   "targetId": 7

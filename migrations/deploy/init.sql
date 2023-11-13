@@ -52,7 +52,7 @@ CREATE TABLE
 CREATE TABLE
     "water_requirement"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "value" INT NOT NULL UNIQUE,
+        "value" TEXT NOT NULL UNIQUE,
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );
@@ -66,7 +66,7 @@ CREATE TABLE
 CREATE TABLE
     "hardiness_zone"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "value" INT NOT NULL UNIQUE,
+        "value" TEXT NOT NULL UNIQUE,
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );

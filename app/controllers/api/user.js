@@ -118,7 +118,7 @@ class UserController extends CoreController {
        * @param {number} user.id - The ID of the user to generate the token for.
        * @returns {string} The generated JWT.
        */
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '23h' });
     if (token) {
       response.status(200).json({
         status: 'success',

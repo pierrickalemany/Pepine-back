@@ -146,7 +146,7 @@ class CoreController {
     }
 
     // Check if the user is authorized to delete an entry because of is role
-    if (request.user.role !== 'admin') {
+    if (this.constructor.name === 'MediaController' && request.user.role !== 'admin') {
       throw new UnauthorizedError();
     }
 
