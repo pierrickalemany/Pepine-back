@@ -9,5 +9,5 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 const multerMiddleware = upload.array('images', 5);
-
+debug(multerMiddleware);
 export default multerMiddleware;
