@@ -17,7 +17,7 @@ async function handleUploadedFiles(request, ___, next) {
         .toBuffer();
 
       // Saving or further processing the compressed image
-      await sharp(compressedBuffer).toFile(`./docs/media/${file.originalname}`);
+      await sharp(compressedBuffer).toFile(`/docs/media/${file.originalname}`);
 
       // Returning image details
       return {
