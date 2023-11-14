@@ -5,7 +5,7 @@ BEGIN;
 
 CREATE FUNCTION create_product(json) RETURNS product AS $$
 	INSERT INTO "product" ("name", "scientific_name", "maturity_height", "maturity_width", "family", "origin",
-						   "flower_color", "leaf_color", "description1", "description2", "stock", "price", "vat", "status", "user_id",
+						   "flower_color", "leaf_color", "description1", "description2", "size", "pot", "stock", "price", "vat", "status", "user_id",
 						  "yield_id", "hardiness_zone_id", "water_requirement_id", "exposure_id", "ground_cover_power_id", "strate_id", "foliage_id")
 	VALUES (
 	   $1->>'name',
@@ -18,6 +18,8 @@ CREATE FUNCTION create_product(json) RETURNS product AS $$
 	   $1->>'leaf_color',
 	   $1->>'description1',
 	   $1->>'description2',
+	   $1->>'seize',
+	   $1->>'pot',
 	   ($1->>'stock')::int,
 	   ($1->>'price')::numeric,
 	   ($1->>'vat')::numeric,
