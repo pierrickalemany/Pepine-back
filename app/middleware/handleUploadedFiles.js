@@ -1,6 +1,16 @@
 import Debug from 'debug';
 import sharp from 'sharp';
+
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
 import InternalServerError from '../errors/InternalServerError.js';
+
+// Obtenir le chemin du répertoire actuel du module
+const currentModuleUrl = import.meta.url;
+const currentModulePath = fileURLToPath(currentModuleUrl);
+const currentDir = dirname(currentModulePath);
+
+// Construire le chemin absolu du fichier dans le répertoire "docs/media"
 
 const debug = Debug('pepine:Sharp');
 
@@ -17,11 +27,12 @@ async function handleUploadedFiles(request, ___, next) {
         .toBuffer();
 
       // Saving or further processing the compressed image
-      await sharp(compressedBuffer).toFile(`docs/media/${file.originalname}`);
+      const cheminDuFichier = join(currentDir, 'docs', 'media', `${file.originalname}`);
+      await sharp(compressedBuffer).toFile(cheminDuFichier);
 
       // Returning image details
       return {
-        url: `docs/media/${file.originalname}`,
+        url: cheminDuFichier,
         name: file.originalname,
       };
     }));
