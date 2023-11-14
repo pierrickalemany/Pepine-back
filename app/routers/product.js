@@ -252,7 +252,7 @@ router.post('/media', authenticateToken, multerMiddleware, handleUploadedFiles, 
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.post('/media/order', authenticateToken, validate(productSchemas.productHasMediaSchema.post, 'body'), controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
+router.post('/media/order', authenticateToken, validate(productSchemas.productHasMediaSchema, 'body'), controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
 
 /**
  * POST /products/category
@@ -379,7 +379,7 @@ router.patch('/:id/categories', authenticateToken, validate(productSchemas.produ
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.patch('/:id/media', authenticateToken, validate(productSchemas.productHasMediaSchema.patch, 'body'), controllerHandler(productHasMediaController.updateProductMedias.bind(productHasMediaController)));
+router.patch('/:id/media', authenticateToken, validate(productSchemas.productHasMediaSchema, 'body'), controllerHandler(productHasMediaController.updateProductMedias.bind(productHasMediaController)));
 
 /**
  * DELETE producte/media/{id}
