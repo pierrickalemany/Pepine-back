@@ -18,7 +18,7 @@ CREATE FUNCTION create_product(json) RETURNS product AS $$
 	   $1->>'leaf_color',
 	   $1->>'description1',
 	   $1->>'description2',
-	   $1->>'seize',
+	   $1->>'size',
 	   $1->>'pot',
 	   ($1->>'stock')::int,
 	   ($1->>'price')::numeric,
