@@ -27,7 +27,9 @@ async function handleUploadedFiles(request, ___, next) {
         .toBuffer();
 
       // Saving or further processing the compressed image
-      const cheminDuFichier = join(currentDir, 'docs', 'media', `${file.originalname}`);
+      // Remonter de deux répertoires pour atteindre le répertoire racine
+      const rootDir = join(currentDir, '..', '..');
+      const cheminDuFichier = join(rootDir, 'docs', 'media', `${file.originalname}`);
       await sharp(compressedBuffer).toFile(cheminDuFichier);
 
       // Returning image details
