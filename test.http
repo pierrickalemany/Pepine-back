@@ -28,9 +28,8 @@ Authorization: Bearer <Your_Token_Here>
 GET {{apiEndpoint}}/users
 
 ### One user account
-GET {{apiEndpoint}}/users/7
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwiaWF0IjoxNjk5NDU2NjMyLCJleHAiOjE2OTk0NjAyMzJ9.JcatDncMbCHT9fkKJw9KEKucf1Nt4AoOUlfZO_D8yJM
-
+GET {{apiEndpoint}}/users/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDQ0MDYzLCJleHAiOjE3MDAxMjY4NjN9.ubi0ongAuoWSI9rQY3R8OGthTw9lKSf9Jj7PBoEZDLI
 ### Orders of user account
 GET {{apiEndpoint}}/users/3/orders
 
@@ -108,8 +107,7 @@ Authorization: Bearer <Your_Token_Here>
 ### Product creation
 POST {{apiEndpoint}}/products/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk5OTU1NTcwLCJleHAiOjE3MDAwMzgzNzB9.sZ5yKu7qZRKzOj4sXrzpZ6Du1c3sXDiR7AhtbWQ-kes
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDQ4MjMzLCJleHAiOjE3MDAxMzEwMzN9.gh7HzvA_wNueAdpfvoKywBxsFK7G7SBdy0JcEvNrqoA
 {
    "name": "Ciboulette",
    "scientific_name": "ALLIUM schoenoprasum",
@@ -126,7 +124,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6I
    "stock": 15,
    "price": 2.6,
    "vat": 10,
-   "status": "false",
+   "status": false,
    "user_id": 1,
    "yield_id": 1,
    "hardiness_zone_id": 1,
@@ -181,7 +179,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6I
 ### order creation
 POST {{apiEndpoint}}/orders/
 Content-Type: application/json
-Authorization: Bearer Joi.array().items(Joi.object({
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDU0NzE0LCJleHAiOjE3MDAxMzc1MTR9.9s3d55LcC93EKmyQBMNofPjmBsprVc3m6NgNXuul-4M
 
 {
    "first_name_order": "blublu",
@@ -194,20 +192,29 @@ Authorization: Bearer Joi.array().items(Joi.object({
 ### order_has_product creation
 POST {{apiEndpoint}}/orders/details
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk4Njk0ODQsImV4cCI6MTY5OTg3MzA4NH0.b_9g60gOsC1ywu3tKdqj_iKtbwPOXIAgFTOZMzwAhgA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDU0NzE0LCJleHAiOjE3MDAxMzc1MTR9.9s3d55LcC93EKmyQBMNofPjmBsprVc3m6NgNXuul-4M
 
-{
-   "product_id": 1,
-   "order_id": 1,
-   "quantity": 12,
-   "price_time_order": 12.52,
-   "vat": 5.5
-}
+[
+ {
+    "product_id": 1,
+    "order_id": 1,
+    "quantity": 12,
+    "price_time_order": 12.52,
+    "vat": 5.5
+ },
+ {
+    "product_id": 2,
+    "order_id": 2,
+    "quantity": 10,
+    "price_time_order": 2.52,
+    "vat": 20
+ }
+]
 
 ### Product_has_category creation
 POST {{apiEndpoint}}/products/category
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk3MDkxNzgsImV4cCI6MTY5OTcxMjc3OH0.hlXm5AJldr39zqNBQlcr-kG2hYVLUMEmiQ5PCfXxi9Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDU0NzE0LCJleHAiOjE3MDAxMzc1MTR9.9s3d55LcC93EKmyQBMNofPjmBsprVc3m6NgNXuul-4M
 
 {
    "product_id": 1,
@@ -237,7 +244,7 @@ Content-Type: application/json
 }
 ### media delete
 DELETE {{ apiEndpoint }}/products/media/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk2MjAwODEsImV4cCI6MTY5OTYyMzY4MX0.69VPI-0yVTRGedtceVTAbBZTBNdzBzRTFx08b2H8T6s
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDU0MDE3LCJleHAiOjE3MDAxMzY4MTd9.JrGSIQv04NpB2CmWNq6FtK3sBFYixQDHIw9Hy3p9aaM
 
 
 ### user delete

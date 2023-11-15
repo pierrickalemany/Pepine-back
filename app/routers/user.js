@@ -6,6 +6,7 @@ import authenticateToken from '../middleware/authenticateToken.js';
 import validate from '../validations/validate.js';
 import * as userSchemas from '../validations/schemas/userSchemas.js';
 import * as idSchemas from '../validations/schemas/idSchemas.js';
+import checkAdminRole from '../middleware/checkAdminRole.js';
 
 const router = Router();
 /**
@@ -126,8 +127,6 @@ router.post('/register', validate(userSchemas.registerSchema.post, 'body'), cont
  */
 router.post('/login', validate(userSchemas.loginSchema.post, 'body'), controllerHandler(userController.login.bind(userController)));
 
-router.post('/', validate(userSchemas.userSchema.post, 'body'), controllerHandler(userController.create.bind(userController)));
-
 /**
  * GET /users/
  * @summary Get all user
@@ -154,9 +153,36 @@ router.post('/', validate(userSchemas.userSchema.post, 'body'), controllerHandle
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.post('/', controllerHandler(userController.create.bind(userController)));
+router.post('/', validate(userSchemas.userSchema.post, 'body'), controllerHandler(userController.create.bind(userController)));
 
-router.get('/', authenticateToken, controllerHandler(userController.getAll.bind(userController)));
+/**
+ * GET /users/
+ * @summary Get all user
+ * @tags User
+ * @security bearerAuth
+ * @return {User} 200 - User created - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @example response - 500 - Example of internal server error response
+ * {
+ * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+ * }
+ * @return {object} 400 - Bad request - application/json
+ * @example response - 400 - Example of bad request response
+ * {
+ * "message": "The request cannot be fulfilled due to bad syntax."
+ * }
+ * @return {object} 404 - Not found - application/json
+ * @example response - 404 - Example of not found response
+ * {
+ * "message": "The requested resource was not found on this server."
+ * }
+ * @return {object} 422 - Unprocessable entity - application/json
+ * @example response - 422 - Example of unprocessable entity response
+ * {
+ * "message": "The request was well-formed but was unable to be followed due to semantic errors."
+ * }
+ */
+router.get('/', authenticateToken, checkAdminRole, controllerHandler(userController.getAll.bind(userController)));
 
 /**
  * GET /users/{id}
@@ -188,7 +214,7 @@ router.get('/', authenticateToken, controllerHandler(userController.getAll.bind(
  *
  */
 
-router.get('/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(userController.getOne.bind(userController)));
+router.get('/:id', authenticateToken, validate(idSchemas.default.idUrl, 'query'),  controllerHandler(userController.getOne.bind(userController)));
 
 /**
  * GET /users/{id}/orders
@@ -218,7 +244,7 @@ router.get('/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken
  * }
  */
 
-router.get('/:id/orders', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(userController.getAllOrdersOfUser.bind(userController)));
+router.get('/:id/orders', authenticateToken, validate(idSchemas.default.idUrl, 'query'), controllerHandler(userController.getAllOrdersOfUser.bind(userController)));
 
 /**
  * PATCH /users/{id}
@@ -279,6 +305,6 @@ router.patch('/:id', authenticateToken, validate(userSchemas.userSchema.patch, '
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.delete('/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(userController.deleteOne.bind(userController)));
+router.delete('/:id', authenticateToken, validate(idSchemas.default.idUrl, 'query'), controllerHandler(userController.deleteOne.bind(userController)));
 
 export default router;

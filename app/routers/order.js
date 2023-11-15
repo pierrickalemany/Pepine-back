@@ -12,8 +12,8 @@ import checkAdminRole from '../middleware/checkAdminRole.js';
 const router = Router();
 /**
  * @typedef {object} Order
- * @property {string} first_name.required - First name of the user - ex: John
- * @property {string} last_name.required - Last name of the user - ex: Doe
+ * @property {string} first_name_order.required - First name of the user - ex: John
+ * @property {string} last_name_order.required - Last name of the user - ex: Doe
  * @property {string} total_price.required - Total price of the order - ex: 100
  * @property {string} status.required - Status of the order - ex: pending
  * @property {number} user_id.required - User ID - ex: 1
@@ -80,7 +80,7 @@ const router = Router();
  *    "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.get('/', authenticateToken, controllerHandler(orderController.getAllOrders.bind(orderController)));
+router.get('/', authenticateToken, checkAdminRole, controllerHandler(orderController.getAllOrders.bind(orderController)));
 
 /**
  * GET /orders/{id}
@@ -149,7 +149,8 @@ router.post('/', authenticateToken, validate(orderSchemas.orderSchema.post, 'bod
  * @summary Create order_has_product
  * @tags OrderHasProduct
  * @security bearerAuth
- * @param   {[OrderHasProduct]}  request.body.required - Details of the order product relationship
+ * @param   {[OrderHasProduct]}  request.body- Array of the order product relationship 
+ * @param {array} request.body.productHasMedia - Array of ProductHasMedia objects
  * @return  {[OrderHasProduct]} 200 - Success response - application/json
  * @return {object} 422 - Unprocessable Entity - application/json
  * @example response - 422 - Example of Unprocessable Entity
@@ -173,7 +174,7 @@ router.post('/', authenticateToken, validate(orderSchemas.orderSchema.post, 'bod
  * }
  */
 
-router.post('/details', authenticateToken, validate(orderSchemas.orderHasProductSchema.post, 'body'), controllerHandler(orderHasProductController.create.bind(orderHasProductController)));
+router.post('/details', authenticateToken, validate(orderSchemas.orderHasProductSchema, 'body'), controllerHandler(orderHasProductController.create.bind(orderHasProductController)));
 
 /**
  * PATCH /orders/{id}/update-status

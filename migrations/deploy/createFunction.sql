@@ -117,17 +117,39 @@ CREATE FUNCTION create_order(json) RETURNS "order" AS $$
 	RETURNING *;
 $$ LANGUAGE sql STRICT VOLATILE;
 
-CREATE FUNCTION create_order_has_product(json) RETURNS "order_has_product" AS $$
-	INSERT INTO "order_has_product" ("product_id", "order_id", "quantity", "price_time_order", "vat")
-	VALUES (
-		($1->>'product_id')::int,
-	    ($1->>'order_id')::int,
-	    ($1->>'quantity')::int, 
-		($1->>'price_time_order')::numeric, 
-		($1->>'vat')::numeric 
-	)
-	RETURNING *;
-$$ LANGUAGE sql STRICT VOLATILE;
+CREATE FUNCTION create_order_has_product(input_json jsonb)
+RETURNS SETOF "order_has_product" AS $$
+DECLARE
+    order_product_object JSONB;
+    product_id INT;
+    order_id INT;
+    quantity INT;
+    price_time_order NUMERIC;
+    vat NUMERIC;
+    inserted_row "order_has_product"%ROWTYPE;
+BEGIN
+    -- Loop through JSON array for each element
+    FOR order_product_object IN SELECT * FROM jsonb_array_elements(input_json) LOOP
+        -- Extract values from JSON object
+        product_id := (order_product_object->>'product_id')::int;
+        order_id := (order_product_object->>'order_id')::int;
+        quantity := (order_product_object->>'quantity')::int;
+        price_time_order := (order_product_object->>'price_time_order')::numeric;
+        vat := (order_product_object->>'vat')::numeric;
+
+        -- Insert values into order_has_product table
+        INSERT INTO "order_has_product" ("product_id", "order_id", "quantity", "price_time_order", "vat")
+        VALUES (product_id, order_id, quantity, price_time_order, vat)
+        RETURNING * INTO inserted_row; -- Return inserted row
+
+        -- End of loop, no value returned here because we already used RETURNING in INSERT statement
+        RETURN NEXT inserted_row;
+    END LOOP;
+
+    RETURN;
+END;
+$$ LANGUAGE plpgsql VOLATILE STRICT;
+
 
 CREATE FUNCTION create_product_has_category(json) RETURNS "product_has_category" AS $$
 	INSERT INTO "product_has_category" ("product_id", "category_id")

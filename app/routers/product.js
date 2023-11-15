@@ -190,7 +190,7 @@ router.get('/:id', validate(idSchemas.default.idUrl, 'query'), controllerHandler
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.post('/', authenticateToken, validate(productSchemas.productSchema.post, 'body'), controllerHandler(productController.create.bind(productController)));
+router.post('/', authenticateToken, checkAdminRole, validate(productSchemas.productSchema.post, 'body'), controllerHandler(productController.create.bind(productController)));
 
 /**
  * POST /products/media
@@ -228,7 +228,8 @@ router.post('/media', authenticateToken, checkAdminRole, multerMiddleware, handl
  * @summary Create a new order for product media
  * @tags Product
  * @security bearerAuth
- * @param   {[ProductHasMedia]}  request.body [product media description]
+ * @param   {[ProductHasMedia]}  request.body- Array of ProductHasMedia objects 
+ * @param {array} request.body.productHasMedia - Array of ProductHasMedia objects
  *
  * @return  {[ProductHasMedia]} 200 - Success response - application/json
  * @return {object} 500 - Internal server error - application/json
@@ -382,7 +383,7 @@ router.patch('/:id/categories', authenticateToken, checkAdminRole, validate(prod
 router.patch('/:id/media', authenticateToken, checkAdminRole, validate(productSchemas.productHasMediaSchema.patch, 'body'), controllerHandler(productHasMediaController.updateProductMedias.bind(productHasMediaController)));
 
 /**
- * DELETE producte/media/{id}
+ * DELETE products/media/{id}
  * @summary Delete a media by ID
  * @tags Product
  * @security bearerAuth
@@ -410,6 +411,6 @@ router.patch('/:id/media', authenticateToken, checkAdminRole, validate(productSc
  * }
  */
 
-router.delete('/media/:id', validate(idSchemas.default.idUrl, 'query'), authenticateToken, controllerHandler(mediaController.deleteOne.bind(mediaController)));
+router.delete('/media/:id', authenticateToken, checkAdminRole, validate(idSchemas.default.idUrl, 'query'), controllerHandler(mediaController.deleteOne.bind(mediaController)));
 
 export default router;

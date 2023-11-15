@@ -17,8 +17,10 @@ async function handleUploadedFiles(request, ___, next) {
         .jpeg({ quality: 80 })
         .toBuffer();
 
+        // Get file name without extension
+      const fileNameWithoutExtension = path.parse(file.originalname).name;
       // Generating a unique file name
-      const uniqueFileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}${path.extname(file.originalname)}`;
+      const uniqueFileName = `${fileNameWithoutExtension}_${Date.now()}${path.extname(file.originalname)}`;
       // Saving or further processing the compressed image
       await sharp(compressedBuffer).toFile(`./public/media/${uniqueFileName}`);
       // get the file path
