@@ -1,4 +1,5 @@
 import express from 'express';
+
 import cors from 'cors';
 import userDocImplementation from './services/swagger.js';
 
@@ -14,6 +15,8 @@ app.use(express.urlencoded({
   extended: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+app.use('/static', express.static('public'));
 
 userDocImplementation(app);
 app.use(router);

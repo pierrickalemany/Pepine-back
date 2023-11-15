@@ -7,6 +7,7 @@ import authenticateToken from '../middleware/authenticateToken.js';
 import validate from '../validations/validate.js';
 import * as orderSchemas from '../validations/schemas/orderSchemas.js';
 import * as idSchemas from '../validations/schemas/idSchemas.js';
+import checkAdminRole from '../middleware/checkAdminRole.js';
 
 const router = Router();
 /**
@@ -203,6 +204,6 @@ router.post('/details', authenticateToken, validate(orderSchemas.orderHasProduct
  * "message": "The ressource you attempted to update could not be found."
  * }
  */
-router.patch('/:id/update-status', authenticateToken, validate(orderSchemas.orderSchema.patch, 'body'), controllerHandler(orderController.updateOrderStatus.bind(orderController)));
+router.patch('/:id/update-status', authenticateToken, checkAdminRole, validate(orderSchemas.orderSchema.patch, 'body'), controllerHandler(orderController.updateOrderStatus.bind(orderController)));
 
 export default router;

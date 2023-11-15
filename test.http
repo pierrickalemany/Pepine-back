@@ -1,5 +1,6 @@
 @apiEndpoint = http://localhost:{{$dotenv PORT}}
 
+
 ### Products
 GET {{apiEndpoint}}/products
 
@@ -107,7 +108,7 @@ Authorization: Bearer <Your_Token_Here>
 ### Product creation
 POST {{apiEndpoint}}/products/
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk5OTU1NTcwLCJleHAiOjE3MDAwMzgzNzB9.sZ5yKu7qZRKzOj4sXrzpZ6Du1c3sXDiR7AhtbWQ-kes
 
 {
    "name": "Ciboulette",
@@ -120,6 +121,8 @@ Authorization: Bearer <Your_Token_Here>
    "leaf_color": "orenge",
    "description1": "En été, les tiges creuses, dressées et odorantes de la ciboulette portent jusqu'à 20 fleurs violet clair ou roses disposées en ombelle dense et pouvant atteindre jusqu'à 5 cm d'envergure. Allium schoenoprasum est une plante vivace bulbeuse, comestible (tiges et fleurs), facile à vivre, utilisée comme condiment. Il est toutefois préférable de couper les fleurs avant qu'elles ne montent en graines.Plantation Exposition soleil, mi-ombre, rusticité rustique (t° mini : -15°), type de sol normal, richesse du sol pauvre, humidité du sol frais, ph du sol tous\n\nTous nos conseils de plantation\nCaractéristiques\nPlante, hauteur à maturité 25 cm, largeur à maturité 10 cm, couleur du feuillage vert tendre, type de feuillage semi-persistant, port hérissée\n\nCaractéristiques complètes",
    "description2": "il n'y en a pas",
+   "size": "11 cm",
+   "pot": "1L",
    "stock": 15,
    "price": 2.6,
    "vat": 10,
@@ -148,13 +151,12 @@ Content-Type: application/json
 ### Media creation
 POST {{apiEndpoint}}/products/media
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE2OTk4NjU4NjAsImV4cCI6MTY5OTg2OTQ2MH0.ACVfn9J6nf_ZIuqNp8yDqlm0uAQKhlKd5vG3s6Xc2mk
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjk5OTQ4NDYzLCJleHAiOjE3MDAwMzEyNjN9.jWiZ9JQznwPU2Gp1dLog4sNsXhm6OGaeTeFGgNh93ls
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="images"; filename="fraise-triste-404.jpg"
+Content-Disposition: form-data; name="images"; filename="plante-terre.jpg"
 Content-Type: image/jpeg
 
-{{@file("./app/docs/sendPicture/fraise-triste-404.jpg")}}
+@/docs/send/plante.terre.jpg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 
@@ -230,8 +232,8 @@ POST {{apiEndpoint}}/users/login
 Content-Type: application/json
 
 {
-   "email": "pepine11@gmail.com",
-   "password": "Pepine1112345*"
+   "email": "pepine@gmail.com",
+   "password": "Pepine12345*"
 }
 ### media delete
 DELETE {{ apiEndpoint }}/products/media/3
