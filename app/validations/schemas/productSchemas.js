@@ -20,7 +20,7 @@ const productSchema = {
     description2: Joi.string(),
     size: Joi.string().max(50),
     pot: Joi.string().max(50),
-    stock: Joi.number().integer().positive().allow(0),
+    stock: Joi.number().integer().positive(),
     price: Joi.number().precision(2).positive(),
     vat: Joi.number().precision(2).positive(),
     status: Joi.boolean(),
@@ -78,9 +78,16 @@ const productHasCategorySchema = {
 };
 
 const productHasMediaSchema = Joi.array().items(Joi.object({
-  product_id: Joi.number().integer().positive().required(),
-  media_id: Joi.number().integer().positive().required(),
-  order: Joi.number().integer().positive().required(),
+  post: Joi.object({
+    product_id: Joi.number().integer().positive().required(),
+    media_id: Joi.number().integer().positive().required(),
+    order: Joi.number().integer().positive().required(),
+  }).required(),
+  patch: Joi.object({
+    product_id: Joi.number().integer().positive(),
+    media_id: Joi.number().integer().positive(),
+    order: Joi.number().integer().positive(),
+  }).min(1),
 }));
 
 export {

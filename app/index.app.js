@@ -10,8 +10,6 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use(express.static('docs'));
-
 app.use(express.urlencoded({
   extended: true,
   allowedHeaders: ['Content-Type', 'Authorization'],

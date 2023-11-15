@@ -82,6 +82,7 @@ VALUES ('Correct'),
 
 
 INSERT INTO "media" ("url", "name")
+
 VALUES  ('https://i.postimg.cc/9MNdbXwM/Ciboulette.jpg', 'Ciboulette_1'),
     ('https://i.postimg.cc/QC9pyLcq/Ciboulette-2.jpg', 'Ciboulette_2'),
     ('https://i.postimg.cc/Vvxjy7RP/Ciboulette-3.jpg', 'Ciboulette_3'),
@@ -106,6 +107,7 @@ VALUES  ('https://i.postimg.cc/9MNdbXwM/Ciboulette.jpg', 'Ciboulette_1'),
     ('https://i.postimg.cc/G363DBhf/Citronnier.jpg', 'Citronnier_1'),
     ('https://i.postimg.cc/fTXzfwVR/Citronnier-2.jpg', 'Citronnier_2'),
     ('https://i.postimg.cc/FFYs1bmc/Citronnier-3.jpg', 'Citronnier_3');
+
 
 INSERT INTO "user" (
   "first_name",
