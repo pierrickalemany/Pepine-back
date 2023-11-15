@@ -16,6 +16,7 @@ API backend pour la gestion des produits, utilisateurs et catégories d'une pép
 - Express-jsdoc-swagger
 - Joi
 - Jsonwebtoken
+- Jest
 
 ## Installation
 - Cloner ou télécharger le projet depuis son dépôt GitHub
