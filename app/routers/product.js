@@ -253,7 +253,7 @@ router.post('/media', authenticateToken, checkAdminRole, multerMiddleware, handl
  * "message": "The request was well-formed but was unable to be followed due to semantic errors."
  * }
  */
-router.post('/media/order', authenticateToken, checkAdminRole, validate(productSchemas.productHasMediaSchema.post, 'body'), controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
+router.post('/media/order', authenticateToken, checkAdminRole, validate(productSchemas.productHasMediaSchema, 'body'), controllerHandler(productHasMediaController.create.bind(productHasMediaController)));
 
 /**
  * POST /products/category

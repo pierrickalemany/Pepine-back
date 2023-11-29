@@ -78,16 +78,9 @@ const productHasCategorySchema = {
 };
 
 const productHasMediaSchema = Joi.array().items(Joi.object({
-  post: Joi.object({
-    product_id: Joi.number().integer().positive().required(),
-    media_id: Joi.number().integer().positive().required(),
-    order: Joi.number().integer().positive().required(),
-  }).required(),
-  patch: Joi.object({
-    product_id: Joi.number().integer().positive(),
-    media_id: Joi.number().integer().positive(),
-    order: Joi.number().integer().positive(),
-  }).min(1),
+  product_id: Joi.number().integer().positive().required(),
+  media_id: Joi.number().integer().positive().required(),
+  order: Joi.number().integer().positive().required(),
 }));
 
 export {

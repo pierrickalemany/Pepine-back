@@ -214,7 +214,7 @@ router.get('/', authenticateToken, checkAdminRole, controllerHandler(userControl
  *
  */
 
-router.get('/:id', authenticateToken, validate(idSchemas.default.idUrl, 'query'),  controllerHandler(userController.getOne.bind(userController)));
+router.get('/:id', authenticateToken, validate(idSchemas.default.idUrl, 'query'), controllerHandler(userController.getOne.bind(userController)));
 
 /**
  * GET /users/{id}/orders
