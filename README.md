@@ -17,7 +17,7 @@ API backend pour la gestion des produits, utilisateurs et catégories d'une pép
 - Joi
 - multer
 - sharp
-
+-jwt
 
 ## Installation
 - Cloner ou télécharger le projet depuis son dépôt GitHub
