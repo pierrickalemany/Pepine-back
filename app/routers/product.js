@@ -228,7 +228,7 @@ router.post('/media', authenticateToken, checkAdminRole, multerMiddleware, handl
  * @summary Create a new order for product media
  * @tags Product
  * @security bearerAuth
- * @param   {[ProductHasMedia]}  request.body- Array of ProductHasMedia objects 
+ * @param   {[ProductHasMedia]}  request.body- Array of ProductHasMedia objects
  * @param {array} request.body.productHasMedia - Array of ProductHasMedia objects
  *
  * @return  {[ProductHasMedia]} 200 - Success response - application/json
