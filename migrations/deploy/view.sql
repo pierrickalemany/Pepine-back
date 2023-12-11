@@ -34,7 +34,8 @@ CREATE VIEW getAllProducts AS
         ARRAY_AGG(DISTINCT pm.order) AS media_order,
         s.value AS strate_value,
         ARRAY_AGG(DISTINCT c.value) AS category,
-        ARRAY_AGG(DISTINCT m.url) AS media_urls
+        ARRAY_AGG(DISTINCT m.url) AS media_urls,
+        ARRAY_AGG(DISTINCT m.id) AS media_id
     FROM product p
     JOIN yield y ON p.yield_id = y.id
     JOIN hardiness_zone hz ON p.hardiness_zone_id = hz.id
