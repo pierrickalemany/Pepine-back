@@ -49,7 +49,7 @@ class ProductHasCategoryController extends CoreController {
    */
   updateProductCategories = async (request, response) => {
     const { id } = request.params;
-    const { categoryIds } = JSON.stringify(request.body);
+    const categoryIds = request.body;
     debug(`updateProductCategories ${id}, ${categoryIds}`);
     // condition so that only the administrator can update a category of product
     if (request.user.role !== 'admin') {
