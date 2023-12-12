@@ -73,7 +73,7 @@ const productHasCategorySchema = {
   }).required(),
   patch: Joi.object({
     product_id: Joi.number().integer().positive(),
-    category_id: Joi.number().integer().positive(),
+    category_ids: Joi.array().items(Joi.number().integer().positive()).required(),
   }),
 };
 

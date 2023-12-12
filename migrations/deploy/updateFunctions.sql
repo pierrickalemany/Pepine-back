@@ -50,20 +50,31 @@ RETURNS VOID AS $$
     WHERE id = order_id;
 $$ LANGUAGE sql;
 
-CREATE OR REPLACE FUNCTION update_product_categories(p_product_id INT, category_ids INT[])
-RETURNS VOID AS $$
+DO $$ 
 DECLARE
-    category_id INT; -- Déclarer la variable category_id
+    product_id INT := 1;
+    category_ids INT[] := ARRAY[1, 2];
 BEGIN
-    -- Supprimer toutes les associations existantes pour ce produit
-    DELETE FROM product_has_category WHERE product_id = p_product_id;
+    -- Create the category update function
+    CREATE OR REPLACE FUNCTION update_product_categories(p_product_id INT, p_category_ids INT[])
+    RETURNS VOID AS $$
+    DECLARE
+        category_id INT;
+    BEGIN
+        -- Remove all existing associations for this product
+        DELETE FROM product_has_category WHERE product_id = p_product_id;
 
-    -- Créer de nouvelles associations pour chaque catégorie fournie
-    FOREACH category_id IN ARRAY category_ids LOOP
-        INSERT INTO product_has_category (product_id, category_id) VALUES (p_product_id, category_id);
-    END LOOP;
-END;
-$$ LANGUAGE plpgsql;
+        -- Create new associations for each category provided
+        FOREACH category_id IN ARRAY p_category_ids LOOP
+            INSERT INTO product_has_category (product_id, category_id) VALUES (p_product_id, category_id);
+        END LOOP;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    -- Call the function with the values extracted from the JavaScript object
+    PERFORM update_product_categories(product_id, category_ids);
+END $$;
+
 
 
 CREATE OR REPLACE FUNCTION update_product_media(p_product_id INT, new_media JSONB)
