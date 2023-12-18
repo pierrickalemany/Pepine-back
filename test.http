@@ -30,8 +30,10 @@ GET {{apiEndpoint}}/users
 ### One user account
 GET {{apiEndpoint}}/users/2
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDQ0MDYzLCJleHAiOjE3MDAxMjY4NjN9.ubi0ongAuoWSI9rQY3R8OGthTw9lKSf9Jj7PBoEZDLI
+
 ### Orders of user account
-GET {{apiEndpoint}}/users/3/orders
+GET {{apiEndpoint}}/users/2/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMTQwMTA5LCJleHAiOjE3MDAyMjI5MDl9.Y3CUM-YorupZkwU7mjckxtqR6kN-rd118gP20w16cNM
 
 ### Modify User 1
 PATCH  {{apiEndpoint}}/users/1
@@ -107,7 +109,8 @@ Authorization: Bearer <Your_Token_Here>
 ### Product creation
 POST {{apiEndpoint}}/products/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDQ4MjMzLCJleHAiOjE3MDAxMzEwMzN9.gh7HzvA_wNueAdpfvoKywBxsFK7G7SBdy0JcEvNrqoA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDYwODc1LCJleHAiOjE3MDAxNDM2NzV9.2B7BP3z3mbV5d-2b3ZG7aq7UUigAcs90jl6t2-tPo80
+
 {
    "name": "Ciboulette",
    "scientific_name": "ALLIUM schoenoprasum",
@@ -254,3 +257,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6I
 {
   "targetId": 7
 }
+
+### productHasCategory delete
+DELETE {{ apiEndpoint }}/products/1/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyOTA5NjI4LCJleHAiOjE3MDI5OTI0Mjh9.3Sl4DWoeVSAbq28yus5Si-o2pIweBYp712Mc4u1pCBI
+

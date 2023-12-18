@@ -7,7 +7,7 @@
   "scripts": {
     "test": "jest tests",
     "dev": "DEBUG=pepine:* npx nodemon index.js",
-    "resetdb": "sqitch revert production -y && sqitch deploy production"
+    "resetdb": "sqitch revert -y && sqitch deploy"
   },
   "keywords": [],
   "author": "",

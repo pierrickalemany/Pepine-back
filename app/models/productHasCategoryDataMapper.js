@@ -35,7 +35,7 @@ class ProductHasCategoryDataMapper extends CoreDataMapper {
    * @returns {Promise<Object>} - A Promise that resolves to an object representing the updated product.
    */
   updateProductCategories = async (productId, categoryIds) => {
-    debug(`${this.constructor.name} updateProductCategories $, ${productId}, ${categoryIds}`);
+    debug(`${this.constructor.name} updateProductCategories`);
     const query = {
       text: `SELECT ${this.constructor.updateFunc}($1, $2)`,
       values: [productId, categoryIds],

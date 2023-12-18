@@ -49,6 +49,10 @@ class CoreController {
     if (Number.isNaN(Number(id))) {
       throw new BadInputError();
     }
+    // condition so that the user can only get their own account
+    if (this.constructor.name === 'UserController' && String(request.user.id) !== String(request.params.id)) {
+      throw new UnauthorizedError();
+    }
 
     const result = await this.constructor.dataMapper.findByPk(id);
 

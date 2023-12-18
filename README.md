@@ -15,9 +15,7 @@ API backend pour la gestion des produits, utilisateurs et catégories d'une pép
 - Cors
 - Express-jsdoc-swagger
 - Joi
-- multer
-- sharp
--jwt
+- Jsonwebtoken
 
 ## Installation
 - Cloner ou télécharger le projet depuis son dépôt GitHub

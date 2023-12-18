@@ -18,13 +18,14 @@ const orderSchema = {
   }).min(1),
 };
 
-const orderHasProductSchema = Joi.array().items(Joi.object({
-  product_id: Joi.number().integer().positive(),
-  order_id: Joi.number().integer().positive().required(),
-  quantity: Joi.number().integer().positive(),
-  price_time_order: Joi.number().precision(2).positive(),
-  vat: Joi.number().precision(2).positive(),
-}));
+const orderHasProductSchema = Joi.array().items(Joi.object({ 
+    product_id: Joi.number().integer().positive(),
+    order_id: Joi.number().integer().positive().required(),
+    quantity: Joi.number().integer().positive(),
+    price_time_order: Joi.number().precision(2).positive(),
+    vat: Joi.number().precision(2).positive(),
+  }));
+
 
 export {
   orderSchema,
