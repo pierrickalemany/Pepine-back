@@ -87,13 +87,26 @@ CREATE VIEW getAllOrders AS
         o.total_price AS total_price,
         o.created_at AS created_at,
         o.updated_at AS updated_at,
-        p.name AS product_name,
-        p.price AS product_price,
-        ohp.quantity AS quantity_ordered,
-        p.vat AS vat
+		ARRAY_AGG(
+        JSON_BUILD_OBJECT(
+            'product_name', p.name,
+            'product_price', p.price,
+            'quantity_ordered', ohp.quantity,
+            'vat', p.vat
+        )
+    ) AS products
     FROM "order" o
     JOIN order_has_product ohp ON o.id = ohp.order_id
-    JOIN product p ON ohp.product_id = p.id
+    JOIN product p ON ohp.product_id = p.id 
+	GROUP BY o.id,
+			o.reference,
+       		o.status,
+        	o.user_id,
+        	o.first_name_order,
+        	o.last_name_order,
+        	o.total_price,
+        	o.created_at,
+        	o.updated_at
     ORDER BY o.created_at DESC;
 
 COMMIT;
