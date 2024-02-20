@@ -7,6 +7,10 @@ GET {{apiEndpoint}}/products
 ### One product
 GET {{apiEndpoint}}/products/4
 
+### Product to update
+GET {{apiEndpoint}}/products/update/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA4NDIwNDAzLCJleHAiOjE3MDg1MDMyMDN9.YDQ3xNyfqD1Uo8C7b7Mqr8yvgYJsGxJ9JoNDxdGS7rw
+
 ### Categories
 GET {{apiEndpoint}}/categories/
 
@@ -109,7 +113,7 @@ Authorization: Bearer <Your_Token_Here>
 ### Product creation
 POST {{apiEndpoint}}/products/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDYwODc1LCJleHAiOjE3MDAxNDM2NzV9.2B7BP3z3mbV5d-2b3ZG7aq7UUigAcs90jl6t2-tPo80
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA4NDIwMjM0LCJleHAiOjE3MDg1MDMwMzR9.gRWB0F0LRUHB7MPSIJs8_xIUoSP5MOgCZWdYhzKoCE0
 
 {
    "name": "Ciboulette",
@@ -146,7 +150,7 @@ Content-Type: application/json
    "first_name": "test",
    "last_name": "essai",
    "email": "test@test.com",
-   "password": "adzedhafhgfdsddsfdththdcdfvfvfzefdaheriufrt5t19619819rt" 
+   "password": "Test1234*" 
 }
 
 ### Media creation
@@ -229,10 +233,10 @@ POST {{apiEndpoint}}/users/register
 Content-Type: application/json
 
 {
-  "first_name": "super11",
-  "last_name": "pepine11",
-  "email": "pepine11@gmail.com",
-  "password": "Pepine1112345*"
+  "first_name": "essaie",
+  "last_name": "test",
+  "email": "test@test.com",
+  "password": "Test1234*"
   //"role": "admin"
 }
 

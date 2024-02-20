@@ -31,7 +31,7 @@ const userSchema = {
     last_name: Joi.string().min(2).max(50),
     email: Joi.string().pattern(emailPattern).min(8).max(50)
       .required(),
-    password: Joi.string().pattern(passwordPattern).required(),
+    password: Joi.string().pattern(passwordPattern),
   }).min(2),
 };
 

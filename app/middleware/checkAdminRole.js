@@ -4,7 +4,10 @@ const debug = Debug('pepine:chekAdminRole');
 
 // check if user is admin
 export default function checkAdminRole(request, response, next) {
-  debug(request.user);
+  if (process.env.NODE_ENV === 'development') {
+    debug(request.user);
+  }
+
   if (!request.user || request.user.role !== 'admin') {
     return response.status(403).send({
       message: 'Insufficient privileges!',

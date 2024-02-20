@@ -2,6 +2,7 @@ import Debug from 'debug';
 import CoreController from './CoreController.js';
 import orderDataMapper from '../../models/orderDataMapper.js';
 import NoRessourceFoundError from '../../errors/NoRessourceFoundError.js';
+import UnauthorizedError from '../../errors/Unauthorized.js';
 
 const debug = Debug('pepine:controllers:order');
 
@@ -71,7 +72,10 @@ class OrderController extends CoreController {
     debug(`${this.constructor.name} getOneOrder`);
     const { id } = request.params;
     const result = await this.constructor.dataMapper.findOrderByPk(id);
-
+    // Check if the user asking for the orders is the same as the user in the request
+    if (request.user.role !== 'admin' && String(request.user.id) !== String(result.user_id)) {
+      throw new UnauthorizedError();
+    }
     // Check if the result is not null
     if (!result) {
       throw new NoRessourceFoundError();

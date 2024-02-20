@@ -109,4 +109,62 @@ CREATE VIEW getAllOrders AS
         	o.updated_at
     ORDER BY o.created_at DESC;
 
+CREATE VIEW getProductToUpdate AS
+SELECT
+ "product"."id" AS "id",
+ "name",
+ "scientific_name",
+ "maturity_height",
+ "maturity_width",
+ "family",
+ "origin",
+ "flower_color",
+ "leaf_color",
+ "description1",
+ "description2",
+ "size",
+ "pot",
+ "stock",
+ "price",
+ "vat",
+ "status",
+ ("price" + ("price" * "vat" / 100)) AS price_incl_VAT,
+ "yield_id",
+ "hardiness_zone_id",
+ "water_requirement_id",
+ "exposure_id",
+ "ground_cover_power_id",
+ "foliage_id",
+ARRAY_AGG(DISTINCT media_id) AS media_id,
+ARRAY_AGG(DISTINCT category_id) AS category_id,
+ARRAY_AGG(DISTINCT "order") AS "order"
+FROM "product"
+JOIN "product_has_category" ON "product"."id"="product_has_category"."product_id"
+JOIN "product_has_media" ON "product"."id"="product_has_media"."product_id"
+GROUP BY
+ "product"."id",
+ "name",
+ "scientific_name",
+ "maturity_height",
+ "maturity_width",
+ "family",
+ "origin",
+ "flower_color",
+ "leaf_color",
+ "description1",
+ "description2",
+ "size",
+ "pot",
+ "stock",
+ "price",
+ "vat",
+ "status",
+ "yield_id",
+ "hardiness_zone_id",
+ "water_requirement_id",
+ "exposure_id",
+ "ground_cover_power_id",
+ "foliage_id";
+
+
 COMMIT;

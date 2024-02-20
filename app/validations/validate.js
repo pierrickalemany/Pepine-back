@@ -16,7 +16,9 @@ const debug = Debug('pepine:validatation');
 function validate(schema, dataSource) {
   debug('create a new validation middleware');
   return async (request, response, next) => {
-    console.log('validate', request.body);
+    if (process.env.NODE_ENV === 'development') {
+      debug('validate', request.body);
+    }
     try {
       // debug(schema.constructor.name);
       await schema.validateAsync(request[dataSource]);

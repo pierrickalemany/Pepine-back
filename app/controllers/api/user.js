@@ -38,14 +38,18 @@ class UserController extends CoreController {
    * Responds with all orders of a user.
    *
    * @async
+   * @function getAllOrdersOfUser
    * @param {Object} request - The HTTP request object.
    * @param {Object} response - The HTTP response object.
    * @returns {Promise<void>} - A Promise that resolves when the response has been sent.
-   * @memberof module:controllers/api/UserController
    */
   getAllOrdersOfUser = async (request, response) => {
     debug(`${this.constructor.name} getAllOrdersOfUser`);
     const { id } = request.params;
+    // Check if the user asking for the orders is the same as the user in the request
+    if (request.user.role !== 'admin' && String(request.user.id) !== String(id)) {
+      throw new UnauthorizedError();
+    }
     const results = await this.constructor.dataMapper.findAllOrdersOfUser(id);
 
     // Check if the result is not null

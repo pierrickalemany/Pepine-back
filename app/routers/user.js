@@ -214,13 +214,14 @@ router.get('/', authenticateToken, checkAdminRole, controllerHandler(userControl
  *
  */
 
-router.get('/:id', authenticateToken, validate(idSchemas.default.idUrl, 'query'),  controllerHandler(userController.getOne.bind(userController)));
+router.get('/:id', authenticateToken, validate(idSchemas.default.idUrl, 'query'), controllerHandler(userController.getOne.bind(userController)));
 
 /**
  * GET /users/{id}/orders
  * @summary Get all orders of one user
  * @security bearerAuth
  * @tags User
+ * @param {number} id.path.required - id of the user to get
  * @return {[UserOrder]} 200 - User created - application/json
  * @return {object} 500 - Internal server error - application/json
  * @example response - 500 - Example of internal server error response

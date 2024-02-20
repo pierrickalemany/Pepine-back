@@ -149,7 +149,7 @@ router.post('/', authenticateToken, validate(orderSchemas.orderSchema.post, 'bod
  * @summary Create order_has_product
  * @tags OrderHasProduct
  * @security bearerAuth
- * @param   {[OrderHasProduct]}  request.body- Array of the order product relationship 
+ * @param   {[OrderHasProduct]}  request.body- Array of the order product relationship
  * @param {array} request.body.productHasMedia - Array of ProductHasMedia objects
  * @return  {[OrderHasProduct]} 200 - Success response - application/json
  * @return {object} 422 - Unprocessable Entity - application/json

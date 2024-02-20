@@ -1,5 +1,6 @@
 import Debug from 'debug';
 import CoreDataMapper from './CoreDataMapper.js';
+import client from './helpers/database.js';
 
 const debug = Debug('pepine:DataMapper:product');
 
@@ -17,8 +18,29 @@ class ProductDataMapper extends CoreDataMapper {
   // view created in postgresql
   static viewname = 'getAllProducts';
 
+  static viewnameupdate = 'getProductToUpdate';
+
   // update function created in postgresql
   static updateFunc = 'update_product';
+
+  /**
+   * Fetch an entry according to its id.
+   *
+   * @async
+   * @param {number} id - The id of the entry.
+   * @returns {Promise<Object>} An entry.
+   */
+  async findProductToUpdate(id) {
+    debug(`${this.constructor.name} findByPk(${id})`);
+    const dataSource = `${this.constructor.viewnameupdate}`;
+    const preparedQuery = {
+      text: `SELECT * FROM ${dataSource} WHERE id=$1`,
+      values: [id],
+    };
+    const results = await client.query(preparedQuery);
+
+    return results.rows[0];
+  }
 
   /**
    * Creates a new instance of the ProductDataMapper class.
