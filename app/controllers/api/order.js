@@ -39,8 +39,8 @@ class OrderController extends CoreController {
    */
   updateOrderStatus = async (req, res) => {
     const { id } = req.params;
-    const { newStatus } = req.body;
-    const results = await this.constructor.dataMapper.updateOrderStatus(id, newStatus);
+    const newStatus = req.body;
+    const results = await this.constructor.dataMapper.updateOrderStatus(id, newStatus.status);
     res.json(results);
   };
 

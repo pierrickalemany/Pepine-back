@@ -57,7 +57,7 @@ Content-Type: application/json
 Authorization: Bearer <Your_Token_Here>
 
 {
-    "newStatus": "validé"
+    "status": "validé"
 }
 
 ### Modify Categories of a product 1
