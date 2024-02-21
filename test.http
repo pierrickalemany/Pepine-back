@@ -54,10 +54,10 @@ Authorization: Bearer <Your_Token_Here>
 ### Modify Status Order 1
 PATCH {{apiEndpoint}}/orders/1/update-status
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA4NDI2NDQ5LCJleHAiOjE3MDg1MDkyNDl9.iJXCW2ebdN5Da2gj47rNlxOSToSB_swD2JmwzPjgzBU
 
 {
-    "status": "validé"
+    "status": "en cours"
 }
 
 ### Modify Categories of a product 1
@@ -266,3 +266,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6I
 DELETE {{ apiEndpoint }}/products/1/category
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAyOTA5NjI4LCJleHAiOjE3MDI5OTI0Mjh9.3Sl4DWoeVSAbq28yus5Si-o2pIweBYp712Mc4u1pCBI
 
+### forgot password
+POST {{apiEndpoint}}/users/forgot-password
+Content-Type: application/json
+
+{
+   "email": "pa@gmail.com"
+}
+
+### reset password
+POST {{apiEndpoint}}/users/reset-password
+Content-Type: application/json
+
+{ 
+   "newPassword": "Test123*",
+   "resetToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcwODUwNTE4MiwiZXhwIjoxNzA4NTA4NzgyfQ.3HyRXc7NOIbSyWx20i4DaT_FvyM6xdvXwZbqqxrbh0A"
+}

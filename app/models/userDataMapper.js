@@ -86,9 +86,42 @@ class UserDataMapper extends CoreDataMapper {
     };
     const { rows } = await client.query(query);
     const user = rows[0];
-    debug('User found. Connexion successfull');
+    debug('User found');
 
     return user;
+  }
+
+  async saveResetToken(resetToken, userId) {
+    debug('Saving reset token');
+    // call sql function
+    const query = {
+      text: `UPDATE "${this.constructor.tableName}" SET reset_token=$1 WHERE id=$2`,
+      values: [resetToken, userId],
+    };
+    const result = await client.query(query);
+    return result;
+  }
+
+  async updatePassword(hachedPassword, userId) {
+    debug('Saving new hached password');
+    // call sql function
+    const query = {
+      text: `UPDATE "${this.constructor.tableName}" SET password=$1 WHERE id=$2`,
+      values: [hachedPassword, userId],
+    };
+    const result = await client.query(query);
+    return result;
+  }
+
+  async clearResetToken(userId) {
+    debug('Clear reset token');
+    // call sql function
+    const query = {
+      text: `UPDATE "${this.constructor.tableName}" SET reset_token=$1 WHERE id=$2`,
+      values: ['', userId],
+    };
+    const result = await client.query(query);
+    return result;
   }
 
   /**

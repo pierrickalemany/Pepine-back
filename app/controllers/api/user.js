@@ -7,6 +7,7 @@ import NoRessourceFoundError from '../../errors/NoRessourceFoundError.js';
 import UnauthorizedError from '../../errors/Unauthorized.js';
 import InternalServerError from '../../errors/InternalServerError.js';
 import ConflictError from '../../errors/ConflictError.js';
+import sendPasswordResetEmail from '../../middleware/sendEmail.js';
 
 const debug = Debug('pepine:controllers:user');
 
@@ -131,6 +132,74 @@ class UserController extends CoreController {
     } else {
       throw new InternalServerError();
     }
+  };
+
+  /**
+ * Generate a reset token for the user and send an email to reset the password
+ * @async
+ * @param {*} request
+ * @param {*} response
+ * @returns {Promise<void>} - A Promise that resolves when the response has been sent.
+ */
+  forgotPassword = async (request, response) => {
+    const { email } = request.body;
+
+    try {
+      // Find the user by email
+      const user = await this.constructor.dataMapper.findUserByEmail(email);
+      const userId = user.id;
+      if (!user) {
+        throw new NoRessourceFoundError();
+      }
+      // Generate and save a reset token for the user
+      debug('Token is generated');
+      const resetToken = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      await this.constructor.dataMapper.saveResetToken(resetToken, user.id);
+
+      // Send password reset email
+      await sendPasswordResetEmail(email, resetToken);
+      debug('Password reset email sent successfully');
+
+      response.status(200).json({ message: 'Password reset email sent successfully' });
+    } catch (error) {
+      debug('Forgot password error:', error);
+      response.status(500).json({ message: 'Internal server error' });
+    }
+  };
+
+  /**
+ *  Reset the user's password
+ * @async
+ * @param {*} request
+ * @param {*} response
+ * @returns {Promise<void>} - A Promise that resolves when the response has been sent.
+ * @returns
+ */
+  resetPassword = async (request, response) => {
+    const { resetToken, newPassword } = request.body;
+    try {
+      // Verify the reset token
+      const verifiedToken = jwt.verify(resetToken, process.env.JWT_SECRET);
+      debug('token is decoded successfully');
+
+      const user = await this.constructor.dataMapper.findByPk(verifiedToken.userId);
+      if (!user) {
+        return response.status(404).json({ message: 'User not found' });
+      }
+
+      // Hash the new password and update it in the database
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await this.constructor.dataMapper.updatePassword(hashedPassword, user.id);
+
+      // Clear the reset token after password reset
+      await this.constructor.dataMapper.clearResetToken(user.id);
+
+      return response.status(200).json({ message: 'Password reset successful' });
+    } catch (error) {
+      debug('Reset password error:', error);
+      response.status(500).json({ message: 'Internal server error' });
+    }
+    return null;
   };
 }
 

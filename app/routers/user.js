@@ -17,6 +17,18 @@ const router = Router();
  */
 
 /**
+ * @typedef {object} UserFordgotPassword
+ * @property {string} email.required - Email of the user - ex: john.doe@example.com
+ */
+
+/**
+ * @typedef {object} UserResetPassword
+ * @property {string} newPassword.required - Password of the user - ex: password
+ * @property {string} resetToken.required - Token of the user - ex: token
+
+ */
+
+/**
  * @typedef {object} RegisterUser
  * @property {string} first_name.required - First name of the user - ex: John
  * @property {string} last_name.required - Last name of the user - ex: Doe
@@ -155,6 +167,28 @@ router.post('/login', validate(userSchemas.loginSchema.post, 'body'), controller
  */
 router.post('/', validate(userSchemas.userSchema.post, 'body'), controllerHandler(userController.create.bind(userController)));
 
+/**
+ * POST /users/forgot-password
+ * @summary Forgot password
+ * @tags UserFordgotPassword
+ * @param   {[UserFordgotPassword]}  request.body      [user email]
+ * @return  {[object]}  200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @return {object} 400 - Bad request - application/json
+ */
+router.post('/forgot-password', validate(userSchemas.forgotPasswordSchema.post, 'body'), userController.forgotPassword);
+
+/**
+ * POST /users/reset-password
+ * @summary Reset password
+ * @tags UserResetPassword
+ * @param   {[UserResetPassword]}  request.body      [user newPassword]
+ * @param {[UserResetPassword]} request.body -  [user resetToken]
+ * @return  {[object]}  200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ * @return {object} 400 - Bad request - application/json
+ */
+router.post('/reset-password', validate(userSchemas.resetPasswordSchema.post, 'body'), userController.resetPassword);
 /**
  * GET /users/
  * @summary Get all user

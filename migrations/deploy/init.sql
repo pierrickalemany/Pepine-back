@@ -16,6 +16,7 @@ CREATE TABLE
         "email" email NOT NULL UNIQUE CHECK (LENGTH("email") <= 50),
         "password" TEXT NOT NULL UNIQUE,
         "role" TEXT NOT NULL DEFAULT 'user',
+        "reset_token" TEXT,
         "created_at" timestamptz NOT NULL DEFAULT now(),
         "updated_at" timestamptz
     );
