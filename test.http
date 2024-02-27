@@ -150,7 +150,7 @@ Content-Type: application/json
    "first_name": "test",
    "last_name": "essai",
    "email": "test@test.com",
-   "password": "Test1234*" 
+   "password": "Tes4*" 
 }
 
 ### Media creation
@@ -236,7 +236,7 @@ Content-Type: application/json
   "first_name": "essaie",
   "last_name": "test",
   "email": "test@test.com",
-  "password": "Test1234*"
+  "password": "Te34*"
   //"role": "admin"
 }
 
@@ -282,3 +282,8 @@ Content-Type: application/json
    "newPassword": "Test123*",
    "resetToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcwODUwNTE4MiwiZXhwIjoxNzA4NTA4NzgyfQ.3HyRXc7NOIbSyWx20i4DaT_FvyM6xdvXwZbqqxrbh0A"
 }
+
+### delete category by product_id
+DELETE {{apiEndpoint}}/categories/product/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA5MDIyMTg0LCJleHAiOjE3MDkxMDQ5ODR9.VHKIhM4Wqtmqv11PkkzRiOnzoe6ujxakifuUl2UPt8I
+

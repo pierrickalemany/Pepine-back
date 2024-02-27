@@ -43,6 +43,16 @@ class ProductHasCategoryDataMapper extends CoreDataMapper {
     const result = await client.query(query);
     return result.rows[0];
   };
+
+  deleteProductCategories = async (productId) => {
+    debug(`${this.constructor.name} deleteProductCategories`);
+    const query = {
+      text: `DELETE FROM ${this.constructor.tableName} WHERE product_id = $1`,
+      values: [productId],
+    };
+    const result = await client.query(query);
+    return result.rowCount;
+  };
 }
 
 export default new ProductHasCategoryDataMapper();

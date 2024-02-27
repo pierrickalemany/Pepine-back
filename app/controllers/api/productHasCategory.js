@@ -3,6 +3,8 @@ import Debug from 'debug';
 import CoreController from './CoreController.js';
 import productHasCategoryDataMapper from '../../models/productHasCategoryDataMapper.js';
 import UnauthorizedError from '../../errors/Unauthorized.js';
+import ConflictError from '../../errors/ConflictError.js';
+import BadInputError from '../../errors/BadInputError.js';
 
 const debug = Debug('pepine:controllers:product_has_category');
 
@@ -58,6 +60,28 @@ class ProductHasCategoryController extends CoreController {
 
     const results = await this.constructor.dataMapper.updateProductCategories(id, categoryIds);
     response.json(results);
+  };
+
+  /**
+   * @function
+   * @param {*} request the request object
+   * @param {*} response the response object
+   * @returns {Promise<void>} - A promise that resolves with the updated product categories.
+   */
+  deleteCategoryByProductId = async (request, response) => {
+    const { id } = request.params;
+
+    const deleteCount = await this.constructor.dataMapper.deleteProductCategories(id);
+    // Check if the entry delete is not on conflict
+    if (deleteCount === null) {
+      throw new ConflictError();
+    }
+
+    // Check if the instructions are correct
+    if (!deleteCount) {
+      throw new BadInputError();
+    }
+    response.json({ status: 'success', data: null });
   };
 }
 

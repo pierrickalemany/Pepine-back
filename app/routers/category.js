@@ -1,8 +1,11 @@
 /* eslint-disable max-len */
 import { Router } from 'express';
 import categoryController from '../controllers/api/category.js';
+import productHasCategory from '../controllers/api/productHasCategory.js';
 import controllerHandler from '../controllers/helpers/controllerHandler.js';
 import validate from '../validations/validate.js';
+import checkAdminRole from '../middleware/checkAdminRole.js';
+import authenticateToken from '../middleware/authenticateToken.js';
 import * as idSchemas from '../validations/schemas/idSchemas.js';
 
 const router = Router();
@@ -10,6 +13,11 @@ const router = Router();
  * @typedef {object} Category
  * @property {string} name.required - Name of the category - ex: Aromatiques
  * @property {string} description.required - Description of the category - ex: Aromatiques
+ */
+
+/**
+ * @typedef {object} CategoryByProduct
+ * @param {integer} id.required - ID of the product_id - ex: 1
  */
 
 /**
@@ -131,5 +139,16 @@ router.get('/:id', validate(idSchemas.default.idUrl, 'query'), controllerHandler
  */
 
 router.get('/:id/products', validate(idSchemas.default.idUrl, 'query'), controllerHandler(categoryController.getAllProductsOfCategory.bind(categoryController)));
+
+/**
+ * DELETE /categories/product/{id}
+ * @summary Delete a category by product id
+ * @tags categoryByProduct
+ * @param {number} id.path.required - id of the product_id to delete
+ * @return {CategoryByProduct} 200 - delete success - application/json
+ * @return {object} 500 - Internal server error - application/json
+
+ */
+router.delete('/product/:id', validate(idSchemas.default.idUrl, 'params'), authenticateToken, checkAdminRole, controllerHandler(productHasCategory.deleteCategoryByProductId.bind(productHasCategory)));
 
 export default router;
