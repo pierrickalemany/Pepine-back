@@ -13,6 +13,7 @@ const router = Router();
  * @typedef {object} User
  * @property {string} first_name.required - First name of the user - ex: John
  * @property {string} last_name.required - Last name of the user - ex: Doe
+ * @property {string} phone.required - Phone of the user - ex: 123456789
  * @property {string} email.required - Email of the user - ex: john.doe@example.com
  */
 
@@ -25,13 +26,19 @@ const router = Router();
  * @typedef {object} UserResetPassword
  * @property {string} newPassword.required - Password of the user - ex: password
  * @property {string} resetToken.required - Token of the user - ex: token
+ */
 
+/**
+ * @typedef {object} ChangePassword
+ * @property {string} oldPassword.required - Old password of the user - ex: password
+ * @property {string} newPassword.required - New password of the user - ex: password
  */
 
 /**
  * @typedef {object} RegisterUser
  * @property {string} first_name.required - First name of the user - ex: John
  * @property {string} last_name.required - Last name of the user - ex: Doe
+ * @property {string} phone.required - Phone of the user - ex: 123456789
  * @property {string} email.required - Email of the user - ex: john.doe@example.com
  * @property {string} password.required - Password of the user - ex: password
  */
@@ -312,6 +319,16 @@ router.get('/:id/orders', authenticateToken, validate(idSchemas.default.idUrl, '
  */
 router.patch('/:id', authenticateToken, validate(userSchemas.userSchema.patch, 'body'), controllerHandler(userController.update.bind(userController)));
 
+/**
+ * POST /users/change-password
+ * @summary Change password
+ * @tags ChangePassword
+ * @security bearerAuth
+ * @param {ChangePassword} request.body.required - Change password info
+ * @return {object} 200 - Success response - application/json
+ * @return {object} 500 - Internal server error - application/json
+ */
+router.post('/change-password', authenticateToken, validate(userSchemas.changePasswordSchema.post, 'body'), controllerHandler(userController.changePassword.bind(userController)));
 /**
  * DELETE /users/{id}
  * @summary Delete user

@@ -168,6 +168,37 @@ class UserController extends CoreController {
   };
 
   /**
+   * change the user's password
+   * @async
+   * @param {*} request
+   * @param {*} response
+   * @returns
+   */
+  changePassword = async (request, response) => {
+    const { oldPassword, newPassword } = request.body;
+    try {
+      // Find the user by email
+      const user = await this.constructor.dataMapper.findByPk(request.user.id);
+      if (!user) {
+        throw new NoRessourceFoundError();
+      }
+      // Check if the old password is valid
+      const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+      if (!isPasswordValid) {
+        throw new UnauthorizedError();
+      }
+      // Hash the new password and update it in the database
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await this.constructor.dataMapper.updatePassword(hashedPassword, user.id);
+
+      response.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+      debug('Change password error:', error);
+      response.status(500).json({ message: 'Internal server error' });
+    }
+  };
+
+  /**
  *  Reset the user's password
  * @async
  * @param {*} request

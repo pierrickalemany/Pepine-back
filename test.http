@@ -287,3 +287,12 @@ Content-Type: application/json
 DELETE {{apiEndpoint}}/categories/product/3
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA5MDIyMTg0LCJleHAiOjE3MDkxMDQ5ODR9.VHKIhM4Wqtmqv11PkkzRiOnzoe6ujxakifuUl2UPt8I
 
+### change password
+POST {{apiEndpoint}}/users/change-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA5MTA2Njc4LCJleHAiOjE3MDkxODk0Nzh9.dz2nHXei4PWo6DZ5XO6EsynZo2sZP0i-DFMfkgB_iD0
+
+{
+   "oldPassword": "Pepine12345*",
+   "newPassword": "Test12345*"
+}

@@ -49,13 +49,16 @@ class CoreController {
     if (Number.isNaN(Number(id))) {
       throw new BadInputError();
     }
-    // condition so that the user can only get their own account
-    if (this.constructor.name === 'UserController' && String(request.user.id) !== String(request.params.id)) {
+    // condition so that the user can only get their own account except if the user is an admin
+    if ((request.user.role !== 'admin' || (this.constructor.name === 'UserController' && String(request.user.id) !== String(request.params.id)))) {
       throw new UnauthorizedError();
     }
 
     const result = await this.constructor.dataMapper.findByPk(id);
-
+    // delete the password from the response if the table is user
+    if (this.constructor.tableName === 'user') {
+      delete result.password;
+    }
     // Check if the result is not null
     if (!result) {
       throw new NoRessourceFoundError();

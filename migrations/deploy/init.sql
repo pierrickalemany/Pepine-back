@@ -13,6 +13,7 @@ CREATE TABLE
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         "first_name" TEXT NOT NULL CHECK (LENGTH("first_name") <= 50),
         "last_name" TEXT NOT NULL CHECK (LENGTH("last_name") <= 50),
+        "phone" TEXT CHECK (LENGTH("phone") <= 50),
         "email" email NOT NULL UNIQUE CHECK (LENGTH("email") <= 50),
         "password" TEXT NOT NULL UNIQUE,
         "role" TEXT NOT NULL DEFAULT 'user',

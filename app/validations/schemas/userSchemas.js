@@ -22,6 +22,7 @@ const userSchema = {
   post: Joi.object({
     first_name: Joi.string().min(2).max(50).required(),
     last_name: Joi.string().min(2).max(50).required(),
+    phone: Joi.string().min(8).max(20).required(),
     email: Joi.string().pattern(emailPattern).min(8).max(50)
       .required(),
     password: Joi.string().pattern(passwordPattern).required(),
@@ -29,16 +30,25 @@ const userSchema = {
   patch: Joi.object({
     first_name: Joi.string().min(2).max(50),
     last_name: Joi.string().min(2).max(50),
+    phone: Joi.string().min(8).max(20),
     email: Joi.string().pattern(emailPattern).min(8).max(50)
       .required(),
     password: Joi.string().pattern(passwordPattern),
   }).min(2),
 };
 
+const changePasswordSchema = {
+  post: Joi.object({
+    oldPassword: Joi.string().pattern(passwordPattern).required(),
+    newPassword: Joi.string().pattern(passwordPattern).required(),
+  }).required(),
+};
+
 const registerSchema = {
   post: Joi.object({
     first_name: Joi.string().min(2).max(50).required(),
     last_name: Joi.string().min(2).max(50).required(),
+    phone: Joi.string().min(8).max(20).required(),
     email: Joi.string().pattern(emailPattern).min(8).max(50)
       .required(),
     password: Joi.string().pattern(passwordPattern).required(),
@@ -74,4 +84,5 @@ export {
   loginSchema,
   resetPasswordSchema,
   forgotPasswordSchema,
+  changePasswordSchema,
 };

@@ -39,10 +39,6 @@ class CoreDataMapper {
       values: [id],
     };
     const results = await client.query(preparedQuery);
-    // Remove password and role from user object
-    if (this.constructor.tableName === 'user') {
-      delete results.rows[0].password;
-    }
 
     return results.rows[0];
   }
