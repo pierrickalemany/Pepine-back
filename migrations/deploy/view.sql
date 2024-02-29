@@ -139,8 +139,8 @@ ARRAY_AGG(DISTINCT media_id) AS media_id,
 ARRAY_AGG(DISTINCT category_id) AS category_id,
 ARRAY_AGG(DISTINCT "order") AS "order"
 FROM "product"
-JOIN "product_has_category" ON "product"."id"="product_has_category"."product_id"
-JOIN "product_has_media" ON "product"."id"="product_has_media"."product_id"
+LEFT JOIN "product_has_category" ON "product"."id"="product_has_category"."product_id"
+LEFT JOIN "product_has_media" ON "product"."id"="product_has_media"."product_id"
 GROUP BY
  "product"."id",
  "name",
@@ -165,6 +165,8 @@ GROUP BY
  "exposure_id",
  "ground_cover_power_id",
  "foliage_id";
+
+
 
 
 COMMIT;
