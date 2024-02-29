@@ -13,7 +13,7 @@ const router = Router();
  * @typedef {object} User
  * @property {string} first_name.required - First name of the user - ex: John
  * @property {string} last_name.required - Last name of the user - ex: Doe
- * @property {string} phone.required - Phone of the user - ex: 123456789
+ * @property {string} phone.required - Email of the user - ex: 123456789
  * @property {string} email.required - Email of the user - ex: john.doe@example.com
  */
 
@@ -38,7 +38,7 @@ const router = Router();
  * @typedef {object} RegisterUser
  * @property {string} first_name.required - First name of the user - ex: John
  * @property {string} last_name.required - Last name of the user - ex: Doe
- * @property {string} phone.required - Phone of the user - ex: 123456789
+ * @property {string} phone.required - Email of the user - ex:123456789
  * @property {string} email.required - Email of the user - ex: john.doe@example.com
  * @property {string} password.required - Password of the user - ex: password
  */

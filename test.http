@@ -32,8 +32,8 @@ Authorization: Bearer <Your_Token_Here>
 GET {{apiEndpoint}}/users
 
 ### One user account
-GET {{apiEndpoint}}/users/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAwMDQ0MDYzLCJleHAiOjE3MDAxMjY4NjN9.ubi0ongAuoWSI9rQY3R8OGthTw9lKSf9Jj7PBoEZDLI
+GET {{apiEndpoint}}/users/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA5MjA3NDg4LCJleHAiOjE3MDkyOTAyODh9.te_nfpzdB98GzDdPh5BAN4PXOccNWSUtbNi1K-5fVn0
 
 ### Orders of user account
 GET {{apiEndpoint}}/users/2/orders

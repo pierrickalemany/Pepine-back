@@ -50,11 +50,17 @@ class CoreController {
       throw new BadInputError();
     }
     // condition so that the user can only get their own account except if the user is an admin
-    if ((request.user.role !== 'admin' || (this.constructor.name === 'UserController' && String(request.user.id) !== String(request.params.id)))) {
-      throw new UnauthorizedError();
+    let result;
+    if (this.constructor.name === 'UserController') {
+      if (request.user.role === 'admin' || String(request.user.id) === String(request.params.id)) {
+        result = await this.constructor.dataMapper.findByPk(id);
+      } else {
+        throw new UnauthorizedError();
+      }
+    } else {
+      result = await this.constructor.dataMapper.findByPk(id);
     }
 
-    const result = await this.constructor.dataMapper.findByPk(id);
     // delete the password from the response if the table is user
     if (this.constructor.tableName === 'user') {
       delete result.password;
