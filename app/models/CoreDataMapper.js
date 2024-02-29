@@ -72,11 +72,13 @@ class CoreDataMapper {
    */
   async update(updateObj) {
     debug(`${this.constructor.name} update ${updateObj.id}`);
-    const results = await client.query(
-      `SELECT * FROM ${this.constructor.updateFunc}('${JSON.stringify(
-        updateObj,
-      )}')`,
-    );
+    const query = `SELECT * FROM ${this.constructor.insertFunc}($1)`;
+    const results = await client.query(query, [JSON.stringify(updateObj)]);
+    // const results = await client.query(
+    // `SELECT * FROM ${this.constructor.updateFunc}('${JSON.stringify(
+    // updateObj,
+    // )}')`,
+    // );
     return results.rows[0];
   }
 
