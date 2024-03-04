@@ -112,7 +112,7 @@ CREATE VIEW getAllOrders AS
 CREATE VIEW getProductToUpdate AS
 SELECT
  "product"."id" AS "id",
- "name",
+ "product"."name" AS "name",
  "scientific_name",
  "maturity_height",
  "maturity_width",
@@ -137,13 +137,15 @@ SELECT
  "foliage_id",
 ARRAY_AGG(DISTINCT media_id) AS media_id,
 ARRAY_AGG(DISTINCT category_id) AS category_id,
-ARRAY_AGG(DISTINCT "order") AS "order"
+ARRAY_AGG(DISTINCT "order") AS "order",
+ARRAY_AGG(DISTINCT "url") AS media_urls
 FROM "product"
 LEFT JOIN "product_has_category" ON "product"."id"="product_has_category"."product_id"
 LEFT JOIN "product_has_media" ON "product"."id"="product_has_media"."product_id"
+LEFT JOIN "media" ON "product_has_media"."media_id"="media"."id"
 GROUP BY
  "product"."id",
- "name",
+ "product"."name",
  "scientific_name",
  "maturity_height",
  "maturity_width",
