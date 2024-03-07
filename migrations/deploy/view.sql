@@ -169,6 +169,4 @@ GROUP BY
  "foliage_id";
 
 
-
-
 COMMIT;

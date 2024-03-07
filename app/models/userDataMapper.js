@@ -43,6 +43,7 @@ class UserDataMapper extends CoreDataMapper {
    *
    * @param {object} userData - The user data.
    * @param {string} userData.email - The user email.
+   * @param {string} userData.phone - The user phone.
    * @param {string} userData.password - The user password.
    * @param {string} userData.firstname - The user firstname.
    * @param {string} userData.lastname - The user lastname.

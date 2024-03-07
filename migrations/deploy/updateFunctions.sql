@@ -9,7 +9,6 @@ CREATE OR REPLACE FUNCTION update_user(json) RETURNS "user" AS $$
         "last_name" = $1->>'last_name',
         "phone" = $1->>'phone',
         "email" = $1->>'email',
-        "password" = $1->>'password',
 	    "updated_at" = NOW()
     WHERE "id" = ($1->>'id')::int
     RETURNING *;

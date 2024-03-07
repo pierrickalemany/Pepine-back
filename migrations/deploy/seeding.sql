@@ -112,18 +112,19 @@ VALUES  ('https://i.postimg.cc/9MNdbXwM/Ciboulette.jpg', 'Ciboulette_1'),
 INSERT INTO "user" (
   "first_name",
   "last_name",
+  "phone",
   "email",
   "password",
   "role"  
 )
 --password: Pepine12345*
 VALUES
-('super', 'pepine','pepine@gmail.com', '$2b$10$4lYsmzO8xXfUYtNkawBBBOViLqQUldkXoFAoZkFDlss8yYDJZTCmK', 'admin'),
-('Nicolas','Brival','nb@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNa', 'user'),
-('Pierrick','Alemany','pa@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNz', 'user'),
-('Vincent','Trahin','vt@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNr', 'user'),
-('Laurent','Bétoin','lb@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNt', 'user'),
-('Fernando','Ituarte Springer','fis@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNy', 'user');
+('super', 'pepine', '0645856548', 'pepine@gmail.com', '$2b$10$4lYsmzO8xXfUYtNkawBBBOViLqQUldkXoFAoZkFDlss8yYDJZTCmK', 'admin'),
+('Nicolas','Brival', '0645856548', 'nb@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNa', 'user'),
+('Pierrick','Alemany', '0645856548', 'pa@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNz', 'user'),
+('Vincent','Trahin', '0645856548', 'vt@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNr', 'user'),
+('Laurent','Bétoin', '0645856548', 'lb@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNt', 'user'),
+('Fernando','Ituarte Springer', '0645856548', 'fis@gmail.com', '$2y$10$ULFF1qvgWT4BSMLGoCvbC.r8BZP9uU1OfoV6mY7PwgQiNHoSzruNy', 'user');
 
 INSERT INTO "product" (
   "scientific_name",

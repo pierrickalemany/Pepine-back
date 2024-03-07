@@ -42,13 +42,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6I
 ### Modify User 1
 PATCH  {{apiEndpoint}}/users/1
 Content-Type: application/json
-Authorization: Bearer <Your_Token_Here>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzA5ODI5MjEwLCJleHAiOjE3MDk5MTIwMTB9.oUZobPgX4prmNDSR9bpWKjMpsGBb2jlikJMgUzuwAuI
 
 {  
    "first_name": "Serge",
    "last_name": "Serge",
-   "email": "test@test.com",
-   "password": "test"
+   "phone": "0606060605",
+   "email": "tessst@test.com"
  }
 
 ### Modify Status Order 1
@@ -233,10 +233,11 @@ POST {{apiEndpoint}}/users/register
 Content-Type: application/json
 
 {
+  "phone": "0606060606",
   "first_name": "essaie",
   "last_name": "test",
   "email": "test@test.com",
-  "password": "Te34*"
+  "password": "Test1234*"
   //"role": "admin"
 }
 
