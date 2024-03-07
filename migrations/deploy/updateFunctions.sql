@@ -7,6 +7,7 @@ CREATE OR REPLACE FUNCTION update_user(json) RETURNS "user" AS $$
     UPDATE "user" SET
         "first_name" = $1->>'first_name',
         "last_name" = $1->>'last_name',
+        "phone" = $1->>'phone',
         "email" = $1->>'email',
         "password" = $1->>'password',
 	    "updated_at" = NOW()

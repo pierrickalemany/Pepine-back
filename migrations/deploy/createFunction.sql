@@ -38,10 +38,11 @@ $$ LANGUAGE sql VOLATILE;
 
 
 CREATE FUNCTION create_user(json) RETURNS "user" AS $$
-	INSERT INTO "user" ("first_name", "last_name", "email", "password", "role")
+	INSERT INTO "user" ("first_name", "last_name", "phone", "email", "password", "role")
 	VALUES (
 	   $1->>'first_name',
 	   $1->>'last_name',
+	   $1->>'phone',
 	   $1->>'email',
 	   $1->>'password',
 	   COALESCE($1->>'role', 'user')
