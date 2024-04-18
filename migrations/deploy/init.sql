@@ -141,7 +141,7 @@ CREATE TABLE
 CREATE TABLE
     "product_has_category"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "product_id" INT REFERENCES "product"(id),
+        "product_id" INT REFERENCES "product"(id) ON DELETE CASCADE, 
         "category_id" INT REFERENCES "category"(id)
     );
 
@@ -149,7 +149,7 @@ CREATE TABLE
 CREATE TABLE
     "product_has_media"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "product_id" INT REFERENCES "product"(id),
+        "product_id" INT REFERENCES "product"(id) ON DELETE CASCADE,
         "media_id" INT REFERENCES "media"(id) ON DELETE CASCADE,
         "order" INT NOT NULL CHECK ("order" >= 0),
         "created_at" timestamptz NOT NULL DEFAULT now(),
@@ -159,7 +159,7 @@ CREATE TABLE
 CREATE TABLE
     "order_has_product"(
         "id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        "product_id" INT REFERENCES "product"(id),
+        "product_id" INT REFERENCES "product"(id) ON DELETE SET NULL,
         "order_id" INT REFERENCES "order"(id),
         "quantity" INT NOT NULL CHECK (quantity >= 0),
         "price_time_order" NUMERIC(5, 2) NOT NULL,

@@ -480,4 +480,39 @@ router.delete('/media/:id', authenticateToken, checkAdminRole, validate(idSchema
 
 router.delete('/:id/category', authenticateToken, checkAdminRole, controllerHandler(productHasCategoryController.deleteOne.bind(productHasCategoryController)));
 
+/**
+ * DELETE /products/{id}
+ * @summary Delete a product by ID
+ * @tags Product
+ * @security bearerAuth
+ * @param   {[number]} id.path          [id description]
+ * @return  {[]} 200 - Success response - application/json
+ * @example response - 200 - Example of success response
+ * {
+  *"status": "success",
+    * "data": null
+    * }
+    * @return {object} 500 - Internal server error - application/json
+    * @example response - 500 - Example of internal server error response
+    * {
+    * "message": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+    * }
+    * @return {object} 401 - Unauthorized - application/json
+    * @example response - 401 - Example of unauthorized response
+    * {
+    * "message": "You are not authorized to access the requested resource."
+    * }
+    * @return {object} 403 - Forbidden - application/json
+    * @example response - 403 - Example of forbidden response
+    * {
+    * "message": "You are not allowed to access the requested resource."
+    * }
+    * @return {object} 404 - Not found - application/json
+    * @example response - 404 - Example of not found response 
+    * {
+    * "message": "The requested resource was not found on this server."
+    * }
+*/
+router.delete('/:id', authenticateToken, checkAdminRole, validate(idSchemas.default.idUrl, 'query'), controllerHandler(productController.deleteOne.bind(productController)));
+
 export default router;
