@@ -39,6 +39,10 @@ class OrderController extends CoreController {
    */
   updateOrderStatus = async (req, res) => {
     const { id } = req.params;
+
+    if (req.user.role !== 'admin' && String(req.user.id) !== String(id)) {
+      throw new UnauthorizedError();
+    }
     const newStatus = req.body;
     const results = await this.constructor.dataMapper.updateOrderStatus(id, newStatus.status);
     res.json(results);

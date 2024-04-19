@@ -89,6 +89,7 @@ CREATE VIEW getAllOrders AS
         o.updated_at AS updated_at,
 		ARRAY_AGG(
         JSON_BUILD_OBJECT(
+            'product_id', p.id,
             'product_name', p.name,
             'product_price', p.price,
             'quantity_ordered', ohp.quantity,

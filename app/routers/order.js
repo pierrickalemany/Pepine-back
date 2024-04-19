@@ -205,6 +205,6 @@ router.post('/details', authenticateToken, validate(orderSchemas.orderHasProduct
  * "message": "The ressource you attempted to update could not be found."
  * }
  */
-router.patch('/:id/update-status', authenticateToken, checkAdminRole, validate(orderSchemas.orderSchema.patch, 'body'), controllerHandler(orderController.updateOrderStatus.bind(orderController)));
+router.patch('/:id/update-status', authenticateToken, validate(orderSchemas.orderSchema.patch, 'body'), controllerHandler(orderController.updateOrderStatus.bind(orderController)));
 
 export default router;
